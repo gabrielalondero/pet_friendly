@@ -1,3 +1,4 @@
+import 'package:pet_friendly/shared/images_path.dart' as path;
 class AgeModel {
   int? id;
   String title;
@@ -33,13 +34,13 @@ class AgeModel {
 }
 
 final AgeModel baby =
-    AgeModel(id: 0, image: 'images/ageFilter/babyAgeFilter.png', title: 'Baby');
+    AgeModel(id: 0, image: path.ageBabyImage, title: 'Baby');
 
 final AgeModel young = AgeModel(
-    id: 1, image: 'images/ageFilter/youngAgeFilter.png', title: 'Young');
+    id: 1, image: path.ageYoungImage, title: 'Young');
 
 final AgeModel adult = AgeModel(
-    id: 2, image: 'images/ageFilter/adultAgeFilter.png', title: 'Adult');
+    id: 2, image: path.ageAdultImage, title: 'Adult');
 
 final AgeModel senior = AgeModel(
-    id: 3, image: 'images/ageFilter/oldAgeFilter.png', title: 'Senior');
+    id: 3, image: path.ageSeniorImage, title: 'Senior');
