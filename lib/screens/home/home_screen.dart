@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pet_friendly/screens/home/widgets/age_filter/age_filters.dart';
+import 'package:pet_friendly/screens/home/widgets/card/custom_card.dart';
 import 'package:pet_friendly/screens/home/widgets/custom_text_field.dart';
 import 'package:pet_friendly/screens/widgets/custom_app_bar.dart';
 
@@ -24,7 +25,8 @@ class HomeScreen extends StatelessWidget {
               CustomTextField(),
               SizedBox(height: 22),
               AgeFilters(),
-              SizedBox(height: 22),              
+              SizedBox(height: 22),
+              CustomCard()              
             ],
           )),
     );

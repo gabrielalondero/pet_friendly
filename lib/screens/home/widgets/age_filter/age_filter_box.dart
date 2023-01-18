@@ -30,7 +30,7 @@ class AgeFilterBox extends StatelessWidget {
                 child: Center(
               child: Text(
                 age.title,
-                style: const TextStyle(color: Color(0xFF342D2D)),
+                style: const TextStyle(color: Color(0xFF342D2D), fontSize: 12),
               ),
             )),
           ],
