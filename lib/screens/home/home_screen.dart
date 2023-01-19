@@ -16,7 +16,6 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    homeStore.getPets;
     return Scaffold(
       backgroundColor: color.backgroundColor,
       appBar: const PreferredSize(
@@ -36,16 +35,46 @@ class HomeScreen extends StatelessWidget {
                 builder: (context) {
                   return Flexible(
                     child: ListView.builder(
-                      //shrinkWrap: true,
-                      itemCount: homeStore.animalsList.length,
+                      itemCount: homeStore.itemCount,
                       itemBuilder: (_, index) {
-                        if (homeStore.animalsList.isNotEmpty) {
+                        if (index < homeStore.animalsList.length) {
                           return CustomCard(
                             animal: homeStore.animalsList[index],
                             index: index,
                           );
                         }
-                        return Container();
+                        //ao colocar todos os itens de uma página,
+                        //carrega itens da próxima página
+                        homeStore.loadingNextPage();
+                        if (homeStore.loading) {
+                          return const SizedBox(
+                            height: 10,
+                            child: LinearProgressIndicator(),
+                          );
+                        }
+                        return Padding(
+                          padding: const EdgeInsets.only(top: 50),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              Icon(
+                                Icons.pets_outlined,
+                                color: color.greyLight,
+                                size: 100,
+                              ),
+                              const SizedBox(height: 20),
+                              Text(
+                                'Nenhum pet foi encontrado :(',
+                                style: TextStyle(
+                                  fontSize: 15,
+                                  color: color.textColor,
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
                       },
                     ),
                   );

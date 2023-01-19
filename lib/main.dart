@@ -7,10 +7,6 @@ import 'package:pet_friendly/stores/home_store.dart';
 void main() {
   setupLocators();
   runApp(const MyApp());
-  GetIt.I<HomeStore>().getPets();
-
-  //PetFinderService repo = PetFinderService();
-  //repo.request();
 }
 
 void setupLocators(){

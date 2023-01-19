@@ -21,8 +21,6 @@ class PetFinderService {
     var result = json.decode(response.body);
     _tokenType = result['token_type'] ?? '';
     _accessToken = result['access_token'] ?? '';
-    print(_tokenType);
-    print(_accessToken);
   }
 
   Future<PaginationModel?> _getAnimals(
@@ -50,7 +48,7 @@ class PetFinderService {
       );
       pagination =
           PaginationModel.fromJson(json: json.decode(response.body)['pagination'], animalsList: animals);
-      
+     
       print(animals);
       print(pagination);
 
@@ -65,7 +63,7 @@ class PetFinderService {
     return null;
   }
 
-  Future<PaginationModel?> request({required String type, required String age, required int page}) async {
+  Future<PaginationModel?> requestGetPets({required String type, required String age, required int page}) async {
     await _getToken();
     PaginationModel? animalsPage = await _getAnimals(page: page, age: age, type: type);
     return animalsPage;

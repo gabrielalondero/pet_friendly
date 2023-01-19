@@ -1,10 +1,10 @@
 import 'package:pet_friendly/models/animal_model.dart';
 
 class PaginationModel {
-  int? countPerPage;
-  int? totalCount;
-  int? currentPage;
-  int? totalPages;
+  int countPerPage = 0;
+  int totalCount = 0;
+  int currentPage = 0;
+  int totalPages = 0;
   List<AnimalModel> animals;
 
   PaginationModel({
