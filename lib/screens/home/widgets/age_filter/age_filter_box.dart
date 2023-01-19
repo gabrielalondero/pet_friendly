@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pet_friendly/models/age_model.dart';
+import 'package:pet_friendly/shared/colors.dart'  as color;
 
 class AgeFilterBox extends StatelessWidget {
   const AgeFilterBox({super.key, required this.age});
@@ -12,9 +13,9 @@ class AgeFilterBox extends StatelessWidget {
       height: 79,
       width: 73,
       margin: const EdgeInsets.only(right: 7, left: 7),
-      decoration: const BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.all(Radius.circular(5)),
+      decoration: BoxDecoration(
+        color: color.white,
+        borderRadius: const BorderRadius.all(Radius.circular(5)),
         //boxShadow: [BoxShadow(color: Color(0xFFFFC9C9), blurRadius: 4, offset: Offset(0,4))]
       ),
       child: Padding(
@@ -30,7 +31,7 @@ class AgeFilterBox extends StatelessWidget {
                 child: Center(
               child: Text(
                 age.title,
-                style: const TextStyle(color: Color(0xFF342D2D), fontSize: 12),
+                style: TextStyle(color: color.textColor, fontSize: 12),
               ),
             )),
           ],

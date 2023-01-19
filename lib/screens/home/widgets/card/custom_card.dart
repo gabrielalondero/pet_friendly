@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pet_friendly/models/animal_model.dart';
 import 'package:pet_friendly/screens/home/widgets/card/item_info.dart';
 import 'package:pet_friendly/shared/images_path.dart' as path;
+import 'package:pet_friendly/shared/colors.dart' as color;
 
 class CustomCard extends StatelessWidget {
   const CustomCard({super.key});
@@ -18,9 +19,9 @@ class CustomCard extends StatelessWidget {
           Container(
             height: 128,
             width: 160,
-            decoration: const BoxDecoration(
-              color: Color(0xFFFFC9C9),
-              borderRadius: BorderRadius.only(
+            decoration: BoxDecoration(
+              color: color.pinkLight,
+              borderRadius: const BorderRadius.only(
                 topLeft: Radius.circular(6),
                 bottomLeft: Radius.circular(6),
               ),
@@ -31,14 +32,14 @@ class CustomCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
+                  Text(
                     'American Shorthair',
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w500,
-                      color: Color(0xFF5C5050),
+                      color: color.textCardColor,
                     ),
                   ),
                   const SizedBox(height: 5),

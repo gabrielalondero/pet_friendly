@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pet_friendly/shared/colors.dart' as color;
 
 class ItemInfo extends StatelessWidget {
   const ItemInfo({super.key, required this.image, required this.title});
@@ -12,7 +13,7 @@ class ItemInfo extends StatelessWidget {
     return Flexible(
       child: Container(
         decoration: BoxDecoration(
-            border: Border.all(color: Colors.white),
+            border: Border.all(color: color.white),
             borderRadius: BorderRadius.circular(16)),
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
@@ -29,9 +30,9 @@ class ItemInfo extends StatelessWidget {
               const SizedBox(width: 5),
               Text(
                 title,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 10,
-                  color: Color(0xFF5C5050),
+                  color: color.textCardColor,
                 ),
               ),
             ],

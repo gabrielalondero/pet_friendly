@@ -3,6 +3,7 @@ import 'package:pet_friendly/screens/home/widgets/age_filter/age_filters.dart';
 import 'package:pet_friendly/screens/home/widgets/card/custom_card.dart';
 import 'package:pet_friendly/screens/home/widgets/custom_text_field.dart';
 import 'package:pet_friendly/screens/widgets/custom_app_bar.dart';
+import 'package:pet_friendly/shared/colors.dart' as color;
 
 
 
@@ -12,7 +13,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF8F8F8),
+      backgroundColor: color.backgroundColor,
       appBar: const PreferredSize(
         preferredSize: Size.fromHeight(60),
         child: CustomAppBar(),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pet_friendly/shared/colors.dart' as color;
 
 class CustomAppBar extends StatelessWidget {
   const CustomAppBar({super.key});
@@ -19,7 +20,7 @@ class CustomAppBar extends StatelessWidget {
           ],
         ),
       ),
-      backgroundColor: const Color(0xFFF8F8F8),
+      backgroundColor: color.backgroundColor,
       centerTitle: true,
       elevation: 0,
     );

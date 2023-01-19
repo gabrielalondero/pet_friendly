@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pet_friendly/shared/colors.dart'  as color;
 
 class CustomTextField extends StatelessWidget {
   const CustomTextField({super.key});
@@ -8,37 +9,37 @@ class CustomTextField extends StatelessWidget {
     return Container(
       height: 43,
       padding: const EdgeInsets.only(right: 14, left: 3),
-      decoration: const BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.all(Radius.circular(20)),
-          boxShadow: [
+      decoration: BoxDecoration(
+          color: color.white,
+          borderRadius: const BorderRadius.all(Radius.circular(20)),
+          boxShadow: const [
             BoxShadow(
               offset: Offset(0, 4),
               blurRadius: 4,
               color: Color.fromARGB(60, 0, 0, 0),
             )
           ]),
-      child: const TextField(
-        style: TextStyle(color: Color(0xFF342D2D)),
-        cursorColor: Color(0xFFFF6F7F),
+      child: TextField(
+        style: TextStyle(color: color.textColor),
+        cursorColor: color.pink,
         textInputAction: TextInputAction.search,
         decoration: InputDecoration(
           isDense: true,
-          contentPadding: EdgeInsets.symmetric(vertical: 3),
-          floatingLabelStyle: TextStyle(color: Color(0xFFFF6F7F), fontSize: 14),
+          contentPadding: const EdgeInsets.symmetric(vertical: 3),
+          floatingLabelStyle: TextStyle(color: color.pink, fontSize: 14),
           prefixIcon: Icon(
             Icons.search,
-            color: Color(0xFFFF6F7F),
+            color: color.pink,
             size: 24,
           ),
-          enabledBorder: OutlineInputBorder(
+          enabledBorder: const OutlineInputBorder(
             borderSide: BorderSide.none,
           ),
           focusedBorder: InputBorder.none,
           labelText: 'Find your new friend',
-          labelStyle: TextStyle(color: Color(0xFF858585), fontSize: 12),
+          labelStyle: TextStyle(color: color.greyLight, fontSize: 12),
           hintText: 'E.g.: cat',
-          hintStyle: TextStyle(color: Color(0xFF858585), fontSize: 12),
+          hintStyle: TextStyle(color: color.greyLight, fontSize: 12),
         ),
       ),
     );
