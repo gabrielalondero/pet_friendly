@@ -70,9 +70,7 @@ class AnimalModel {
           breedsList.add(value);
         }
       });
-      print(breedsList);
       breedsResult = breedsList.join(', ');
-      print(breedsResult);
     }
 
     List<String> colorsList = [];
@@ -83,9 +81,7 @@ class AnimalModel {
           colorsList.add(value);
         }
       });
-      print(colorsList);
       colorsResult = colorsList.join(', ');
-      print(colorsResult);
     }
 
     return AnimalModel(

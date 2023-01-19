@@ -6,8 +6,8 @@ import 'package:pet_friendly/models/pagination_model.dart';
 class PetFinderService {
   final String _clientId = '3qKbIU8rdTdJOTBC3IQJimeJUtZoI3YvwfCyqilHzF5YydMfva';
   final String _clientSecret = 'KDQ5b9eiLtLHNLzDZxfp9aRopHvqteJLVStSEkxk';
-  String tokenType = '';
-  String accessToken = '';
+  String _tokenType = '';
+  String _accessToken = '';
 
   _getToken() async {
     http.Response response = await http.post(
@@ -19,10 +19,10 @@ class PetFinderService {
       },
     );
     var result = json.decode(response.body);
-    tokenType = result['token_type'] ?? '';
-    accessToken = result['access_token'] ?? '';
-    print(tokenType);
-    print(accessToken);
+    _tokenType = result['token_type'] ?? '';
+    _accessToken = result['access_token'] ?? '';
+    print(_tokenType);
+    print(_accessToken);
   }
 
   Future<PaginationModel?> _getAnimals(
@@ -32,7 +32,7 @@ class PetFinderService {
       Uri.parse(
           'https://api.petfinder.com/v2/animals?type=$type&age=$age&page=$page'),
       headers: {
-        'Authorization': '$tokenType $accessToken',
+        'Authorization': '$_tokenType $_accessToken',
       },
     );
 
@@ -54,9 +54,9 @@ class PetFinderService {
       print(animals);
       print(pagination);
 
-      var result2 = json.decode(response.body)['animals'];
-      print(result2[1]['breeds']);
-      print(result2[1]['colors']);
+      //var result2 = json.decode(response.body)['animals'];
+      //print(result2[1]['breeds']);
+      //print(result2[1]['colors']);
       
       return pagination;
 
@@ -65,9 +65,10 @@ class PetFinderService {
     return null;
   }
 
-  request() async {
+  Future<PaginationModel?> request({required String type, required String age, required int page}) async {
     await _getToken();
-    PaginationModel? animalsPage = await _getAnimals(page: 1, age: 'senior', type: 'cat');
+    PaginationModel? animalsPage = await _getAnimals(page: page, age: age, type: type);
+    return animalsPage;
     
   }
 }
