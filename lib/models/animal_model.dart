@@ -11,13 +11,13 @@ class AnimalModel {
   String size = '';
   String description = '';
   String status = '';
+  String breeds = '';
+  String colors = '';
 
   AgeModel? age;
 
   List<String> images = [];
   List<String> videos = [];
-  List<String> breeds = [];
-  List<String> colors = [];
   List<String> tags = [];
 
   bool spayedNeutered = false;
@@ -60,24 +60,32 @@ class AnimalModel {
     }
 
     List<String> breedsList = [];
+    String breedsResult = '';
     if (json['breeds'] != null) {
       (json['breeds'] as Map).forEach((key, value) {
-        if (value != null && value == 'primary') {
+        if (value != null && key == 'primary') {
           breedsList.add(value);
         }
-        if (value != null && value == 'secondary') {
+        if (value != null && key == 'secondary') {
           breedsList.add(value);
         }
       });
+      print(breedsList);
+      breedsResult = breedsList.join(', ');
+      print(breedsResult);
     }
 
     List<String> colorsList = [];
+    String colorsResult = '';
     if (json['colors'] != null) {
       (json['colors'] as Map).forEach((key, value) {
         if (value != null) {
           colorsList.add(value);
         }
       });
+      print(colorsList);
+      colorsResult = colorsList.join(', ');
+      print(colorsResult);
     }
 
     return AnimalModel(
@@ -89,10 +97,10 @@ class AnimalModel {
       size: json['size'] ?? '',
       description: json['description'] ?? '',
       status: json['status'] ?? '',
+      breeds: breedsResult,
+      colors: colorsResult,
       images: imagesList,
       videos: videosList,
-      breeds: breedsList,
-      colors: colorsList,
       tags: json['tags'] != null ? List.from(json['tags']) : [],
       spayedNeutered: json['attributes']['spayed_neutered'] ?? false,
       houseTrained: json['attributes']['house_trained'] ?? false,
@@ -102,6 +110,6 @@ class AnimalModel {
 
   @override
   String toString() {
-    return 'Animal(id: $id, name: $name, type: $type, age: $age, gender: $gender, size: $size, description: $description, status: $status, images: $images, videos: $videos, breeds: $breeds, colors: $colors, tags: $tags, spayedNeutered: $spayedNeutered, houseTrained: $houseTrained, contact: $contact)';
+    return 'Animal(id: $id, name: $name, type: $type, age: $age, gender: $gender, size: $size, description: $description, status: $status, breeds: $breeds, colors: $colors, images: $images, videos: $videos, tags: $tags, spayedNeutered: $spayedNeutered, houseTrained: $houseTrained, contact: $contact)';
   }
 }

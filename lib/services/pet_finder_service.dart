@@ -53,11 +53,14 @@ class PetFinderService {
       
       print(animals);
       print(pagination);
+
+      var result2 = json.decode(response.body)['animals'];
+      print(result2[1]['breeds']);
+      print(result2[1]['colors']);
       
       return pagination;
 
-      //var result2 = json.decode(response.body)['animals'];
-      //print(result2[1]['photos']);
+      
     }
     return null;
   }

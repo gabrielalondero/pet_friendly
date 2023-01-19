@@ -5,8 +5,8 @@ import 'package:pet_friendly/screens/home/home_screen.dart';
 void main() {
   runApp(const MyApp());
 
-  //PetFinderService repo = PetFinderService();
-  //repo.request();
+  PetFinderService repo = PetFinderService();
+  repo.request();
 }
 
 class MyApp extends StatelessWidget {
