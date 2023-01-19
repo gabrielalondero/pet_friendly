@@ -18,3 +18,5 @@ String contactImage = 'images/contact/contact.png';
 String emailImage = 'images/contact/email.png';
 String phoneImage = 'images/contact/phone.png';
 String addressImage = 'images/contact/address.png';
+
+String defaultNetworkImage = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSvf9wn1WvKWCp2eCV0atTl56ONzL6TyTPh702UMXqeHag2ZUG0YPch6-XWd2o4S_dK1J4&usqp=CAU';
