@@ -52,29 +52,32 @@ class HomeScreen extends StatelessWidget {
                             child: LinearProgressIndicator(),
                           );
                         }
-                        return Padding(
-                          padding: const EdgeInsets.only(top: 50),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Icon(
-                                Icons.pets_outlined,
-                                color: color.greyLight,
-                                size: 100,
-                              ),
-                              const SizedBox(height: 20),
-                              Text(
-                                'Nenhum pet foi encontrado :(',
-                                style: TextStyle(
-                                  fontSize: 15,
-                                  color: color.textColor,
+                        else if (homeStore.animalsList.isEmpty) {
+                          return Padding(
+                            padding: const EdgeInsets.only(top: 50),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Icon(
+                                  Icons.pets_outlined,
+                                  color: color.greyLight,
+                                  size: 100,
                                 ),
-                              ),
-                            ],
-                          ),
-                        );
+                                const SizedBox(height: 20),
+                                Text(
+                                  'Nenhum pet foi encontrado :(',
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    color: color.textColor,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
+                        }
+                        return Container();
                       },
                     ),
                   );

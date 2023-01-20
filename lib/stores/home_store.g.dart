@@ -32,35 +32,35 @@ mixin _$HomeStore on _HomeStore, Store {
     });
   }
 
-  late final _$filterAgeAtom =
-      Atom(name: '_HomeStore.filterAge', context: context);
+  late final _$selectedAgeFilterAtom =
+      Atom(name: '_HomeStore.selectedAgeFilter', context: context);
 
   @override
-  String get filterAge {
-    _$filterAgeAtom.reportRead();
-    return super.filterAge;
+  String get selectedAgeFilter {
+    _$selectedAgeFilterAtom.reportRead();
+    return super.selectedAgeFilter;
   }
 
   @override
-  set filterAge(String value) {
-    _$filterAgeAtom.reportWrite(value, super.filterAge, () {
-      super.filterAge = value;
+  set selectedAgeFilter(String value) {
+    _$selectedAgeFilterAtom.reportWrite(value, super.selectedAgeFilter, () {
+      super.selectedAgeFilter = value;
     });
   }
 
-  late final _$filterTypeAtom =
-      Atom(name: '_HomeStore.filterType', context: context);
+  late final _$selectedTypeFilterAtom =
+      Atom(name: '_HomeStore.selectedTypeFilter', context: context);
 
   @override
-  String get filterType {
-    _$filterTypeAtom.reportRead();
-    return super.filterType;
+  String get selectedTypeFilter {
+    _$selectedTypeFilterAtom.reportRead();
+    return super.selectedTypeFilter;
   }
 
   @override
-  set filterType(String value) {
-    _$filterTypeAtom.reportWrite(value, super.filterType, () {
-      super.filterType = value;
+  set selectedTypeFilter(String value) {
+    _$selectedTypeFilterAtom.reportWrite(value, super.selectedTypeFilter, () {
+      super.selectedTypeFilter = value;
     });
   }
 
@@ -110,8 +110,38 @@ mixin _$HomeStore on _HomeStore, Store {
     });
   }
 
+  late final _$runRequestGetPetsAsyncAction =
+      AsyncAction('_HomeStore.runRequestGetPets', context: context);
+
+  @override
+  Future<void> runRequestGetPets() {
+    return _$runRequestGetPetsAsyncAction.run(() => super.runRequestGetPets());
+  }
+
   late final _$_HomeStoreActionController =
       ActionController(name: '_HomeStore', context: context);
+
+  @override
+  void setAgeFilter(String value) {
+    final _$actionInfo = _$_HomeStoreActionController.startAction(
+        name: '_HomeStore.setAgeFilter');
+    try {
+      return super.setAgeFilter(value);
+    } finally {
+      _$_HomeStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setTypeFilter(String value) {
+    final _$actionInfo = _$_HomeStoreActionController.startAction(
+        name: '_HomeStore.setTypeFilter');
+    try {
+      return super.setTypeFilter(value);
+    } finally {
+      _$_HomeStoreActionController.endAction(_$actionInfo);
+    }
+  }
 
   @override
   void addListPets(PaginationModel? paginationModel) {
@@ -139,8 +169,8 @@ mixin _$HomeStore on _HomeStore, Store {
   String toString() {
     return '''
 animalsList: ${animalsList},
-filterAge: ${filterAge},
-filterType: ${filterType},
+selectedAgeFilter: ${selectedAgeFilter},
+selectedTypeFilter: ${selectedTypeFilter},
 page: ${page},
 lastPage: ${lastPage},
 loading: ${loading},

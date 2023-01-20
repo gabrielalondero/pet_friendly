@@ -7,28 +7,29 @@ part 'home_store.g.dart';
 class HomeStore = _HomeStore with _$HomeStore;
 
 abstract class _HomeStore with Store {
-  _HomeStore() {
-    autorun((_) async {
-      loading = true;
-      PaginationModel? paginationModel =
-          await PetFinderService().requestGetPets(
-        age: filterAge,
-        type: filterType,
-        page: page,
-      );
-      addListPets(paginationModel);
-      loading = false;
-    });
-  }
+  //_HomeStore() {
+  //runRequestGetPets();
+  // autorun((_) async {
+  //   loading = true;
+  //   PaginationModel? paginationModel =
+  //       await PetFinderService().requestGetPets(
+  //     age: selectedAgeFilter,
+  //     type: selectedTypeFilter,
+  //     page: page,
+  //   );
+  //   addListPets(paginationModel);
+  //   loading = false;
+  // });
+  //}
 
   @observable
   List<AnimalModel> animalsList = [];
 
   @observable
-  String filterAge = '';
+  String selectedAgeFilter = '';
 
   @observable
-  String filterType = '';
+  String selectedTypeFilter = '';
 
   @observable
   int page = 0;
@@ -40,7 +41,37 @@ abstract class _HomeStore with Store {
   bool loading = false;
 
   @action
-  void addListPets(PaginationModel? paginationModel) {  
+  void setAgeFilter(String value) {
+    value == selectedAgeFilter
+        ? selectedAgeFilter = ''
+        : selectedAgeFilter = value;
+    resetPage();
+    runRequestGetPets();
+  }
+
+  @action
+  void setTypeFilter(String value) {
+    value == selectedTypeFilter
+        ? selectedTypeFilter = ''
+        : selectedTypeFilter = value;
+    resetPage();
+    runRequestGetPets();
+  }
+
+  @action
+  Future<void> runRequestGetPets() async {
+    loading = true;
+    PaginationModel? paginationModel = await PetFinderService().requestGetPets(
+      age: selectedAgeFilter,
+      type: selectedTypeFilter,
+      page: page,
+    );
+    addListPets(paginationModel);
+    loading = false;
+  }
+
+  @action
+  void addListPets(PaginationModel? paginationModel) {
     if (paginationModel != null) {
       //se for menor que o número de itens por página, significa que acabou
       if (paginationModel.animals.length < 20) {
@@ -55,12 +86,18 @@ abstract class _HomeStore with Store {
   @action
   void loadingNextPage() {
     page++;
+    runRequestGetPets();
+  }
+
+  //toda vez que usar algum filtro, reseta a lista
+  void resetPage() {
+    page = 0;
+    animalsList.clear();
+    lastPage = false;
   }
 
   @computed
   //o +1 é o item de carregamento no fim da lista
   //se estiver na útima página, não terá
   int get itemCount => lastPage ? animalsList.length : animalsList.length + 1;
-
-  
 }
