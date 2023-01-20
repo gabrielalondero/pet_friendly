@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pet_friendly/models/animal_model.dart';
 import 'package:pet_friendly/screens/home/widgets/card/item_info.dart';
 import 'package:pet_friendly/shared/images_path.dart' as path;
-import 'package:pet_friendly/shared/colors.dart' as color;
+import 'package:pet_friendly/shared/all_colors.dart';
 
 class ContainerInfo extends StatelessWidget {
   const ContainerInfo({super.key, required this.animal, required this.indexIsEven});
@@ -12,6 +12,7 @@ class ContainerInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final color = AllColors();
     return Container(
       height: 128,
       width: 160,

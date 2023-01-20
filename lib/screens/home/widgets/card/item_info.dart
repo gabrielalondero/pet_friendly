@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pet_friendly/shared/colors.dart' as color;
+import 'package:pet_friendly/shared/all_colors.dart';
 
 class ItemInfo extends StatelessWidget {
   const ItemInfo({super.key, required this.image, required this.title});
@@ -10,6 +10,7 @@ class ItemInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final color = AllColors();
     return Flexible(
       child: Container(
         decoration: BoxDecoration(

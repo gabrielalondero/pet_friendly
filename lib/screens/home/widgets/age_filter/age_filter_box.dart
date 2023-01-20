@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pet_friendly/models/age_model.dart';
-import 'package:pet_friendly/shared/colors.dart'  as color;
+import 'package:pet_friendly/shared/all_colors.dart';
 
 class AgeFilterBox extends StatelessWidget {
   const AgeFilterBox({super.key, required this.age});
@@ -9,6 +9,7 @@ class AgeFilterBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final color = AllColors();
     return Container(
       height: 79,
       width: 73,

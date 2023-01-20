@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:pet_friendly/shared/colors.dart'  as color;
+import 'package:pet_friendly/shared/all_colors.dart';
 
 class CustomTextField extends StatelessWidget {
   const CustomTextField({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final color = AllColors();
     return Container(
       height: 43,
       padding: const EdgeInsets.only(right: 14, left: 3),

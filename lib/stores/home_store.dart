@@ -40,7 +40,7 @@ abstract class _HomeStore with Store {
   bool loading = false;
 
   @action
-  Future<void> addListPets(PaginationModel? paginationModel) async {  
+  void addListPets(PaginationModel? paginationModel) {  
     if (paginationModel != null) {
       //se for menor que o número de itens por página, significa que acabou
       if (paginationModel.animals.length < 20) {

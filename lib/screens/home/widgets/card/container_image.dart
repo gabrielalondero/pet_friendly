@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pet_friendly/models/animal_model.dart';
 import 'package:pet_friendly/shared/images_path.dart' as path;
-import 'package:pet_friendly/shared/colors.dart' as color;
+import 'package:pet_friendly/shared/all_colors.dart';
 
 
 class ContainerImage extends StatelessWidget {
@@ -11,6 +11,7 @@ class ContainerImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final color = AllColors();
     return Container(
       height: 162,
       width: 153,

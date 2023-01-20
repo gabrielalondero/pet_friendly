@@ -110,17 +110,19 @@ mixin _$HomeStore on _HomeStore, Store {
     });
   }
 
-  late final _$addListPetsAsyncAction =
-      AsyncAction('_HomeStore.addListPets', context: context);
-
-  @override
-  Future<void> addListPets(PaginationModel? paginationModel) {
-    return _$addListPetsAsyncAction
-        .run(() => super.addListPets(paginationModel));
-  }
-
   late final _$_HomeStoreActionController =
       ActionController(name: '_HomeStore', context: context);
+
+  @override
+  void addListPets(PaginationModel? paginationModel) {
+    final _$actionInfo = _$_HomeStoreActionController.startAction(
+        name: '_HomeStore.addListPets');
+    try {
+      return super.addListPets(paginationModel);
+    } finally {
+      _$_HomeStoreActionController.endAction(_$actionInfo);
+    }
+  }
 
   @override
   void loadingNextPage() {
