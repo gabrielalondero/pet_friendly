@@ -3,6 +3,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 import 'package:pet_friendly/screens/home/widgets/age_filter/age_filters.dart';
 import 'package:pet_friendly/screens/home/widgets/card/custom_card.dart';
+import 'package:pet_friendly/screens/home/widgets/custom_dropdown_search.dart';
 import 'package:pet_friendly/screens/home/widgets/custom_text_field.dart';
 import 'package:pet_friendly/screens/widgets/custom_app_bar.dart';
 import 'package:pet_friendly/shared/all_colors.dart';
@@ -27,7 +28,8 @@ class HomeScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const CustomTextField(),
+              CustomDropdownSearch(),
+              //const CustomTextField(),
               const SizedBox(height: 22),
               const AgeFilters(),
               const SizedBox(height: 20),
@@ -37,28 +39,27 @@ class HomeScreen extends StatelessWidget {
                     child: ListView.builder(
                       itemCount: homeStore.itemCount,
                       itemBuilder: (_, index) {
-                        if (index < homeStore.animalsList.length) {
-                          return CustomCard(
-                            animal: homeStore.animalsList[index],
-                            index: index,
-                          );
-                        }
-                        //ao colocar todos os itens de uma página,
-                        //carrega itens da próxima página
-                        homeStore.loadingNextPage();
-                        if (homeStore.loading) {
-                          return const SizedBox(
-                            height: 10,
-                            child: LinearProgressIndicator(),
-                          );
-                        }
-                        else if (homeStore.animalsList.isEmpty) {
+                        return Observer(builder: (context) {
+                          if (index < homeStore.animalsList.length) {
+                            return CustomCard(
+                              animal: homeStore.animalsList[index],
+                              index: index,
+                            );
+                          }
+                          //ao colocar todos os itens de uma página,
+                          //carrega itens da próxima página
+                          else if (homeStore.message == null) {
+                            homeStore.loadingNextPage();
+                          }
+                          if (homeStore.loading) {
+                            return const SizedBox(
+                              height: 10,
+                              child: LinearProgressIndicator(),
+                            );
+                          }
                           return Padding(
                             padding: const EdgeInsets.only(top: 50),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisSize: MainAxisSize.max,
+                            child: Column(                          
                               children: [
                                 Icon(
                                   Icons.pets_outlined,
@@ -67,7 +68,7 @@ class HomeScreen extends StatelessWidget {
                                 ),
                                 const SizedBox(height: 20),
                                 Text(
-                                  'Nenhum pet foi encontrado :(',
+                                  homeStore.message!,
                                   style: TextStyle(
                                     fontSize: 15,
                                     color: color.textColor,
@@ -76,8 +77,7 @@ class HomeScreen extends StatelessWidget {
                               ],
                             ),
                           );
-                        }
-                        return Container();
+                        });
                       },
                     ),
                   );

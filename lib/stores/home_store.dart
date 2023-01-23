@@ -2,6 +2,7 @@ import 'package:mobx/mobx.dart';
 import 'package:pet_friendly/models/animal_model.dart';
 import 'package:pet_friendly/models/pagination_model.dart';
 import 'package:pet_friendly/services/pet_finder_service.dart';
+import 'package:pet_friendly/shared/images_path.dart';
 part 'home_store.g.dart';
 
 class HomeStore = _HomeStore with _$HomeStore;
@@ -40,6 +41,9 @@ abstract class _HomeStore with Store {
   @observable
   bool loading = false;
 
+  @observable
+  String? message;
+
   @action
   void setAgeFilter(String value) {
     value == selectedAgeFilter
@@ -61,7 +65,7 @@ abstract class _HomeStore with Store {
   @action
   Future<void> runRequestGetPets() async {
     loading = true;
-    PaginationModel? paginationModel = await PetFinderService().requestGetPets(
+    PaginationModel paginationModel = await PetFinderService().requestGetPets(
       age: selectedAgeFilter,
       type: selectedTypeFilter,
       page: page,
@@ -71,13 +75,15 @@ abstract class _HomeStore with Store {
   }
 
   @action
-  void addListPets(PaginationModel? paginationModel) {
-    if (paginationModel != null) {
+  void addListPets(PaginationModel paginationModel) {
+    if (paginationModel.error == null) {
       //se for menor que o número de itens por página, significa que acabou
       if (paginationModel.animals.length < 20) {
         lastPage = true;
       }
       animalsList += paginationModel.animals;
+    } else {
+      message = paginationModel.error;
     }
   }
 
@@ -91,6 +97,7 @@ abstract class _HomeStore with Store {
 
   //toda vez que usar algum filtro, reseta a lista
   void resetPage() {
+    message = null;
     page = 0;
     animalsList.clear();
     lastPage = false;
@@ -100,4 +107,15 @@ abstract class _HomeStore with Store {
   //o +1 é o item de carregamento no fim da lista
   //se estiver na útima página, não terá
   int get itemCount => lastPage ? animalsList.length : animalsList.length + 1;
+
+  //---------------------------------------------------------------------------------
+  
+  List<String> typesList = [];
+  
+  Future<void> runRequestGetTypes() async {
+    List<String>? types = await PetFinderService().getTypes();
+    if (types != null) {
+      typesList = types;
+    }
+  }
 }

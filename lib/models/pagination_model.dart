@@ -1,18 +1,20 @@
 import 'package:pet_friendly/models/animal_model.dart';
 
 class PaginationModel {
-  int countPerPage = 0;
-  int totalCount = 0;
-  int currentPage = 0;
-  int totalPages = 0;
+  int countPerPage;
+  int totalCount;
+  int currentPage;
+  int totalPages;
   List<AnimalModel> animals;
+  String? error;
 
   PaginationModel({
-    required this.countPerPage,
-    required this.totalCount,
-    required this.currentPage,
-    required this.totalPages,
-    required this.animals,
+    this.countPerPage = 0,
+    this.totalCount = 0,
+    this.currentPage = 0,
+    this.totalPages = 0,
+    this.animals = const [],
+    this.error,
   });
 
   factory PaginationModel.fromJson({

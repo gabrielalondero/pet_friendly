@@ -23,8 +23,11 @@ class PetFinderService {
     _accessToken = result['access_token'] ?? '';
   }
 
-  Future<PaginationModel?> _getAnimals(
+  Future<PaginationModel> _getAnimals(
       {required String type, required String age, required int page}) async {
+
+    PaginationModel pagination;
+
     http.Response response = await http.get(
       //parâmetros type e age podem ser vazios
       Uri.parse(
@@ -35,10 +38,7 @@ class PetFinderService {
     );
 
     if (response.statusCode == 200) {
-      
       List<AnimalModel> animals = [];
-      PaginationModel pagination;
-      
       (json.decode(response.body)['animals'] as List).forEach(
         (a) {
           animals.add(
@@ -46,26 +46,51 @@ class PetFinderService {
           );
         },
       );
-      pagination =
-          PaginationModel.fromJson(json: json.decode(response.body)['pagination'], animalsList: animals);
-     
+      pagination = PaginationModel.fromJson(
+          json: json.decode(response.body)['pagination'], animalsList: animals);
+
       print(animals);
       print(pagination);
 
       //var result2 = json.decode(response.body)['animals'];
       //print(result2[1]['breeds']);
       //print(result2[1]['colors']);
-      
-      return pagination;
 
-      
+      return pagination;
+    }
+    return pagination = PaginationModel(error: response.statusCode == 429 ? 'Database unavailable. Please try again later.' : json.decode(response.body)['detail']); 
+
+  }
+
+  
+  
+  Future<List<String>?> getTypes() async {
+    await _getToken();
+    http.Response response = await http.get(
+      Uri.parse('https://api.petfinder.com/v2/types'),
+      headers: {
+        'Authorization': '$_tokenType $_accessToken',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      List<String> typesList = [];
+      (json.decode(response.body)['types'] as List).forEach((e) {
+        typesList.add(e['name']);
+      });
+      print(typesList);
+      return typesList;
     }
     return null;
   }
 
-  Future<PaginationModel?> requestGetPets({required String type, required String age, required int page}) async {
+  
+  
+  Future<PaginationModel> requestGetPets(
+      {required String type, required String age, required int page}) async {
     await _getToken();
-    PaginationModel? animalsPage = await _getAnimals(page: page, age: age, type: type);
+    PaginationModel animalsPage =
+        await _getAnimals(page: page, age: age, type: type);
     return animalsPage;
     
   }

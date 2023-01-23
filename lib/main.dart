@@ -11,6 +11,7 @@ void main() {
 
 void setupLocators(){
   GetIt.I.registerSingleton(HomeStore());
+  //GetIt.I<HomeStore>().runRequestGetTypes();
 }
 
 class MyApp extends StatelessWidget {
