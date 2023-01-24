@@ -83,8 +83,8 @@ abstract class _HomeStore with Store {
 
   //toda vez que usar algum filtro, reseta a lista
   void resetPage() {
-    message = null;
-    page = 1;
+    message = null;   
+    page =  1;
     animalsList.clear();
     lastPage = false;
   }
