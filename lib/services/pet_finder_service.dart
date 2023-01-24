@@ -2,6 +2,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:pet_friendly/models/animal_model.dart';
 import 'package:pet_friendly/models/pagination_model.dart';
+import 'package:pet_friendly/models/type_model.dart';
 
 class PetFinderService {
   final String _clientId = '3qKbIU8rdTdJOTBC3IQJimeJUtZoI3YvwfCyqilHzF5YydMfva';
@@ -48,7 +49,7 @@ class PetFinderService {
       );
       pagination = PaginationModel.fromJson(
           json: json.decode(response.body)['pagination'], animalsList: animals);
-          
+
       print(animals);
       print(pagination);
 
@@ -65,11 +66,11 @@ class PetFinderService {
 
   }
 
-  
-  
-  Future<List<String>> getTypes() async {
+   
+  Future<TypeModel?> getTypes() async {
     await _getToken();
-    List<String> typesList = ['All'];
+    // List<String> typesList = ['All'];
+    // Map<String,String> typesMap = {'All' : ''};
     http.Response response = await http.get(
       Uri.parse('https://api.petfinder.com/v2/types'),
       headers: {
@@ -78,15 +79,11 @@ class PetFinderService {
     );
 
     if (response.statusCode == 200) {
-      
-      (json.decode(response.body)['types'] as List).forEach((e) {
-        typesList.add(e['name']);
-      });
-      print(typesList);
-      return typesList;
+      return TypeModel.fromJson(json.decode(response.body)['types']);
     }
-    return typesList;
+    return null;
   }
+  
   
   Future<PaginationModel> requestGetPets(
       {required String type, required String age, required int page}) async {

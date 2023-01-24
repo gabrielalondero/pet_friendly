@@ -1,6 +1,7 @@
 import 'package:mobx/mobx.dart';
 import 'package:pet_friendly/models/animal_model.dart';
 import 'package:pet_friendly/models/pagination_model.dart';
+import 'package:pet_friendly/models/type_model.dart';
 import 'package:pet_friendly/services/pet_finder_service.dart';
 part 'home_store.g.dart';
 
@@ -29,6 +30,7 @@ abstract class _HomeStore with Store {
   @observable
   String? message;
 
+  late final TypeModel? types;
   @observable
   List<String> typesList = [];
 
@@ -42,7 +44,7 @@ abstract class _HomeStore with Store {
   @action
   void setTypeFilter(String value) {
     if (value != selectedTypeFilter) {
-      selectedTypeFilter = value == 'All' ? '' : value; 
+      selectedTypeFilter = types?.filterStringToParameter(value) ?? ''; 
       resetPage();
       runRequestGetPets();
     }
@@ -98,8 +100,7 @@ abstract class _HomeStore with Store {
 
   @action
   Future<void> runRequestGetTypes() async {
-    List<String> types = await PetFinderService().getTypes();
-    typesList = types;
-    print(typesList);
+      types = await PetFinderService().getTypes();
+      typesList = types?.mapToFilterList() ?? [];
   }
 }
