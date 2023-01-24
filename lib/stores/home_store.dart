@@ -8,20 +8,6 @@ part 'home_store.g.dart';
 class HomeStore = _HomeStore with _$HomeStore;
 
 abstract class _HomeStore with Store {
-  //_HomeStore() {
-  //runRequestGetPets();
-  // autorun((_) async {
-  //   loading = true;
-  //   PaginationModel? paginationModel =
-  //       await PetFinderService().requestGetPets(
-  //     age: selectedAgeFilter,
-  //     type: selectedTypeFilter,
-  //     page: page,
-  //   );
-  //   addListPets(paginationModel);
-  //   loading = false;
-  // });
-  //}
 
   @observable
   List<AnimalModel> animalsList = [];
@@ -44,22 +30,23 @@ abstract class _HomeStore with Store {
   @observable
   String? message;
 
+  @observable
+  List<String> typesList = [];
+
   @action
   void setAgeFilter(String value) {
-    value == selectedAgeFilter
-        ? selectedAgeFilter = ''
-        : selectedAgeFilter = value;
+    selectedAgeFilter = value == selectedAgeFilter ? '' : value;  
     resetPage();
     runRequestGetPets();
   }
 
   @action
   void setTypeFilter(String value) {
-    value == selectedTypeFilter
-        ? selectedTypeFilter = ''
-        : selectedTypeFilter = value;
-    resetPage();
-    runRequestGetPets();
+    if (value != selectedTypeFilter) {
+      selectedAgeFilter = value == 'All' ? '' : value;   
+      resetPage();
+      runRequestGetPets();
+    }
   }
 
   @action
@@ -109,13 +96,11 @@ abstract class _HomeStore with Store {
   int get itemCount => lastPage ? animalsList.length : animalsList.length + 1;
 
   //---------------------------------------------------------------------------------
-  
-  List<String> typesList = [];
-  
+
+  @action
   Future<void> runRequestGetTypes() async {
     List<String>? types = await PetFinderService().getTypes();
-    if (types != null) {
-      typesList = types;
-    }
+    typesList = types;
+    print(typesList);
   }
 }

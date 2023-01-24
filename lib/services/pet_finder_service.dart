@@ -64,8 +64,9 @@ class PetFinderService {
 
   
   
-  Future<List<String>?> getTypes() async {
+  Future<List<String>> getTypes() async {
     await _getToken();
+    List<String> typesList = ['All'];
     http.Response response = await http.get(
       Uri.parse('https://api.petfinder.com/v2/types'),
       headers: {
@@ -74,17 +75,15 @@ class PetFinderService {
     );
 
     if (response.statusCode == 200) {
-      List<String> typesList = [];
+      
       (json.decode(response.body)['types'] as List).forEach((e) {
         typesList.add(e['name']);
       });
       print(typesList);
       return typesList;
     }
-    return null;
+    return typesList;
   }
-
-  
   
   Future<PaginationModel> requestGetPets(
       {required String type, required String age, required int page}) async {
