@@ -48,7 +48,7 @@ class PetFinderService {
       );
       pagination = PaginationModel.fromJson(
           json: json.decode(response.body)['pagination'], animalsList: animals);
-
+          
       print(animals);
       print(pagination);
 
@@ -58,6 +58,9 @@ class PetFinderService {
 
       return pagination;
     }
+    print('PARAMETROS INVÁLIDOS');
+    print(json.decode(response.body)['invalid-params']);
+
     return pagination = PaginationModel(error: response.statusCode == 429 ? 'Database unavailable. Please try again later.' : json.decode(response.body)['detail']); 
 
   }

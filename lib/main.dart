@@ -4,14 +4,18 @@ import 'package:pet_friendly/services/pet_finder_service.dart';
 import 'package:pet_friendly/screens/home/home_screen.dart';
 import 'package:pet_friendly/stores/home_store.dart';
 
-void main() {
+void main() async {
   setupLocators();
+  await initData();
   runApp(const MyApp());
 }
 
-void setupLocators(){
+void setupLocators() {
   GetIt.I.registerSingleton(HomeStore());
-  //GetIt.I<HomeStore>().runRequestGetTypes();
+}
+
+Future<void> initData() async {
+  await GetIt.I<HomeStore>().runRequestGetTypes();
 }
 
 class MyApp extends StatelessWidget {
@@ -29,4 +33,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-

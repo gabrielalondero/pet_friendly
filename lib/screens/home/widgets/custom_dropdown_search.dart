@@ -40,7 +40,7 @@ class CustomDropdownSearch extends StatelessWidget {
         ),
         dropdownButtonProps:
             const DropdownButtonProps(padding: EdgeInsets.zero),
-        items: ['All',"Cat", "Dog", "Bird", 'Horse', 'Rabbit'],
+        items:homeStore.typesList, //['All',"cat", "dog", "bird", 'horse', 'rabbit'],
         onChanged: (value) {
           if (value != null) {
             homeStore.setTypeFilter(value);
