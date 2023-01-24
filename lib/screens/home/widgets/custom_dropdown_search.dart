@@ -40,36 +40,46 @@ class CustomDropdownSearch extends StatelessWidget {
         ),
         dropdownButtonProps:
             const DropdownButtonProps(padding: EdgeInsets.zero),
-        items:homeStore.typesList, //['All',"cat", "dog", "bird", 'horse', 'rabbit'],
+        items: homeStore
+            .typesList, //['All',"cat", "dog", "bird", 'horse', 'rabbit'],
         onChanged: (value) {
           if (value != null) {
             homeStore.setTypeFilter(value);
           }
         },
         selectedItem: 'All',
-        dropdownDecoratorProps: DropDownDecoratorProps(
-          baseStyle: TextStyle(color: color.textColor),
-          dropdownSearchDecoration: InputDecoration(
-            border: InputBorder.none,
-            isDense: true,
-            contentPadding: const EdgeInsets.symmetric(vertical: 3),
-            floatingLabelStyle: TextStyle(color: color.pink, fontSize: 14),
-            prefixIcon: Icon(
-              Icons.search,
-              color: color.pink,
-              size: 24,
-            ),
-            enabledBorder: const OutlineInputBorder(
-              borderSide: BorderSide.none,
-            ),
-            focusedBorder: InputBorder.none,
-            labelText: 'Find your new friend',
-            labelStyle: TextStyle(color: color.greyLight, fontSize: 12),
-            hintText: 'E.g.: cat',
-            hintStyle: TextStyle(color: color.greyLight, fontSize: 12),
-          ),
-        ),
+        dropdownDecoratorProps: _dropdownDecoratorProps(),
       ),
     );
+  }
+
+
+  
+  DropDownDecoratorProps _dropdownDecoratorProps() {
+    return DropDownDecoratorProps(
+      baseStyle: TextStyle(color: color.textColor),
+      dropdownSearchDecoration: InputDecoration(
+        border: InputBorder.none,
+        isDense: true,
+        contentPadding: const EdgeInsets.symmetric(vertical: 3),
+        floatingLabelStyle: TextStyle(color: color.pink, fontSize: 14),
+        prefixIcon: Icon(
+          Icons.search,
+          color: color.pink,
+          size: 24,
+        ),
+        enabledBorder: const OutlineInputBorder(
+          borderSide: BorderSide.none,
+        ),
+        focusedBorder: InputBorder.none,
+        labelText: 'Find your new friend',
+        labelStyle: TextStyle(color: color.greyLight, fontSize: 12),
+        hintText: 'E.g.: cat',
+        hintStyle: TextStyle(color: color.greyLight, fontSize: 12),
+      ),
+    );
+
+
+
   }
 }
