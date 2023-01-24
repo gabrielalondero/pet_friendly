@@ -2,7 +2,6 @@ import 'package:mobx/mobx.dart';
 import 'package:pet_friendly/models/animal_model.dart';
 import 'package:pet_friendly/models/pagination_model.dart';
 import 'package:pet_friendly/services/pet_finder_service.dart';
-import 'package:pet_friendly/shared/images_path.dart';
 part 'home_store.g.dart';
 
 class HomeStore = _HomeStore with _$HomeStore;
@@ -43,7 +42,7 @@ abstract class _HomeStore with Store {
   @action
   void setTypeFilter(String value) {
     if (value != selectedTypeFilter) {
-      selectedAgeFilter = value == 'All' ? '' : value;   
+      selectedTypeFilter = value == 'All' ? '' : value; 
       resetPage();
       runRequestGetPets();
     }
@@ -99,7 +98,7 @@ abstract class _HomeStore with Store {
 
   @action
   Future<void> runRequestGetTypes() async {
-    List<String>? types = await PetFinderService().getTypes();
+    List<String> types = await PetFinderService().getTypes();
     typesList = types;
     print(typesList);
   }
