@@ -21,7 +21,7 @@ class HomeScreen extends StatelessWidget {
       backgroundColor: color.backgroundColor,
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(60),
-        child: CustomAppBar(),
+        child: CustomAppBar(color: color.backgroundColor),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 5),

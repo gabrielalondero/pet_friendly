@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:pet_friendly/shared/all_colors.dart';
 
 class CustomAppBar extends StatelessWidget {
-  CustomAppBar({super.key});
+  CustomAppBar({super.key, required this.color});
 
-  final color = AllColors();
+  final Color color;
 
   @override
-  Widget build(BuildContext context) {
-    
+  Widget build(BuildContext context) {  
     return AppBar(
       title: const Text(
         'PetFriendly',
@@ -17,13 +15,13 @@ class CustomAppBar extends StatelessWidget {
           shadows: [
             Shadow(
               offset: Offset(0, 3),
-              blurRadius: 10,
-              color: Color.fromARGB(77, 0, 0, 0),
+              blurRadius: 7,
+              color: Color.fromARGB(77, 53, 53, 53),
             )
           ],
         ),
       ),
-      backgroundColor: color.backgroundColor,
+      backgroundColor: color,
       centerTitle: true,
       elevation: 0,
     );
