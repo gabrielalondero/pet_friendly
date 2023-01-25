@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 class TypeModel {
   Map<String, String> typesMap;
 
@@ -10,8 +9,7 @@ class TypeModel {
     Map<String, String> map = {'All': ''};
     json.forEach((e) {
       String type = e['name'];
-      type = type.replaceAll(RegExp(r'(,|&)'), '-').replaceAll(' ', '');
-      map[e['name']] = type;
+      map[type] = type.replaceAll(RegExp(r'(,|&)'), '-').replaceAll(' ', '');
     });
     return TypeModel(typesMap: map);
   }

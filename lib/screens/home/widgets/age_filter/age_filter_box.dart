@@ -10,10 +10,10 @@ class AgeFilterBox extends StatelessWidget {
 
   final AgeModel age;
   final HomeStore homeStore = GetIt.I<HomeStore>();
+  final color = AllColors();
 
   @override
-  Widget build(BuildContext context) {
-    final color = AllColors();
+  Widget build(BuildContext context) { 
     return Observer(builder: (_) {
       return GestureDetector(
         onTap: () {
@@ -28,8 +28,8 @@ class AgeFilterBox extends StatelessWidget {
             borderRadius: const BorderRadius.all(Radius.circular(5)),
             boxShadow:[
               homeStore.selectedAgeFilter == age.title ? 
-              BoxShadow(color: Color(0xFFFFC9C9), blurRadius: 4, offset: Offset(0,4)) 
-              : BoxShadow(color: Colors.transparent),
+              const BoxShadow(color: Color(0xFFFFC9C9), blurRadius: 4, offset: Offset(0,4)) 
+              : const BoxShadow(color: Colors.transparent),
               ]
           ),
           child: Padding(

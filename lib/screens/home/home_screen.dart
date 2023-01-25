@@ -13,78 +13,79 @@ class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
 
   final HomeStore homeStore = GetIt.I<HomeStore>();
+  final color = AllColors();
 
   @override
   Widget build(BuildContext context) {
-    final color = AllColors();
     return Scaffold(
       backgroundColor: color.backgroundColor,
-      appBar: const PreferredSize(
-        preferredSize: Size.fromHeight(60),
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(60),
         child: CustomAppBar(),
       ),
       body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 5),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              CustomDropdownSearch(),
-              //const CustomTextField(),
-              const SizedBox(height: 22),
-              const AgeFilters(),
-              const SizedBox(height: 20),
-              Observer(
-                builder: (context) {
-                  return Flexible(
-                    child: ListView.builder(
-                      itemCount: homeStore.itemCount,
-                      itemBuilder: (_, index) {
-                        return Observer(builder: (context) {
-                          if (index < homeStore.animalsList.length) {
-                            return CustomCard(
-                              animal: homeStore.animalsList[index],
-                              index: index,
-                            );
-                          }
-                          //ao colocar todos os itens de uma página,
-                          //carrega itens da próxima página
-                          else if (homeStore.message == null) {
-                            homeStore.loadingNextPage();
-                          }
-                          if (homeStore.loading) {
-                            return const SizedBox(
-                              height: 10,
-                              child: LinearProgressIndicator(),
-                            );
-                          }
-                          return Padding(
-                            padding: const EdgeInsets.only(top: 50),
-                            child: Column(                          
-                              children: [
-                                Icon(
-                                  Icons.pets_outlined,
-                                  color: color.greyLight,
-                                  size: 100,
-                                ),
-                                const SizedBox(height: 20),
-                                Text(
-                                  homeStore.message!,
-                                  style: TextStyle(
-                                    fontSize: 15,
-                                    color: color.textColor,
-                                  ),
-                                ),
-                              ],
-                            ),
+        padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 5),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            CustomDropdownSearch(),
+            //const CustomTextField(),
+            const SizedBox(height: 22),
+            const AgeFilters(),
+            const SizedBox(height: 20),
+            Observer(
+              builder: (context) {
+                return Flexible(
+                  child: ListView.builder(
+                    itemCount: homeStore.itemCount,
+                    itemBuilder: (_, index) {
+                      return Observer(builder: (context) {
+                        if (index < homeStore.animalsList.length) {
+                          return CustomCard(
+                            animal: homeStore.animalsList[index],
+                            index: index,
                           );
-                        });
-                      },
-                    ),
-                  );
-                },
-              )
-            ],
-          )),
+                        }
+                        //ao colocar todos os itens de uma página,
+                        //carrega itens da próxima página
+                        else if (homeStore.message == null) {
+                          homeStore.loadingNextPage();
+                        }
+                        if (homeStore.loading) {
+                          return const SizedBox(
+                            height: 10,
+                            child: LinearProgressIndicator(),
+                          );
+                        }
+                        return Padding(
+                          padding: const EdgeInsets.only(top: 50),
+                          child: Column(
+                            children: [
+                              Icon(
+                                Icons.pets_outlined,
+                                color: color.greyLight,
+                                size: 100,
+                              ),
+                              const SizedBox(height: 20),
+                              Text(
+                                homeStore.message!,
+                                style: TextStyle(
+                                  fontSize: 15,
+                                  color: color.textColor,
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      });
+                    },
+                  ),
+                );
+              },
+            )
+          ],
+        ),
+      ),
     );
   }
 }

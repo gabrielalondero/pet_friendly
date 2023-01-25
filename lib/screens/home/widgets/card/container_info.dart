@@ -5,14 +5,14 @@ import 'package:pet_friendly/shared/images_path.dart' as path;
 import 'package:pet_friendly/shared/all_colors.dart';
 
 class ContainerInfo extends StatelessWidget {
-  const ContainerInfo({super.key, required this.animal, required this.indexIsEven});
+  ContainerInfo({super.key, required this.animal, required this.indexIsEven});
 
   final AnimalModel animal;
   final bool indexIsEven;
+  final color = AllColors();
 
   @override
   Widget build(BuildContext context) {
-    final color = AllColors();
     return Container(
       height: 128,
       width: 160,
@@ -54,7 +54,7 @@ class ContainerInfo extends StatelessWidget {
                     image: animal.age != null
                         ? animal.age!.image
                         : path.ageYoungImage,
-                    title: animal.age != null ? animal.age!.title : '',
+                    title: animal.age != null ? animal.age!.title : 'Unknown age',
                   ),
                   const SizedBox(height: 8),
                   ItemInfo(

@@ -5,13 +5,13 @@ import 'package:pet_friendly/shared/all_colors.dart';
 
 
 class ContainerImage extends StatelessWidget {
-  const ContainerImage({super.key, required this.animal});
+  ContainerImage({super.key, required this.animal});
 
   final AnimalModel animal;
+  final color = AllColors();
 
   @override
   Widget build(BuildContext context) {
-    final color = AllColors();
     return Container(
       height: 162,
       width: 153,
@@ -19,7 +19,7 @@ class ContainerImage extends StatelessWidget {
         image: DecorationImage(
             image: animal.images.isNotEmpty
                 ? NetworkImage(animal.images[0])
-                : NetworkImage(path.defaultNetworkImage),
+                : const NetworkImage(path.defaultNetworkImage),
             fit: BoxFit.cover),
         color: color.greyLight,
         borderRadius: BorderRadius.circular(15),

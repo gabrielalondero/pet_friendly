@@ -14,18 +14,18 @@ class CustomCard extends StatelessWidget {
     final bool indexIsEven = index == 0 || index % 2 == 0;
     if (indexIsEven) {
       return box(
-        ContainerInfo(animal: animal, indexIsEven: indexIsEven),
-        ContainerImage(animal: animal),
+        firstWidget: ContainerInfo(animal: animal, indexIsEven: indexIsEven),
+        secondWidget: ContainerImage(animal: animal),
       );
     }
     return box(
-      ContainerImage(animal: animal,),
-      ContainerInfo(animal: animal, indexIsEven: indexIsEven),
+      firstWidget: ContainerImage(animal: animal,),
+      secondWidget: ContainerInfo(animal: animal, indexIsEven: indexIsEven),
     );
   }
 
   
-  Widget box(Widget firstWidget, Widget secondWidget) {
+  Widget box({required Widget firstWidget, required Widget secondWidget}) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 10),
       child: SizedBox(
