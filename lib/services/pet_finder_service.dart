@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:pet_friendly/models/animal_model.dart';
@@ -7,10 +9,17 @@ import 'package:pet_friendly/models/type_model.dart';
 class PetFinderService {
   final String _clientId = '3qKbIU8rdTdJOTBC3IQJimeJUtZoI3YvwfCyqilHzF5YydMfva';
   final String _clientSecret = 'KDQ5b9eiLtLHNLzDZxfp9aRopHvqteJLVStSEkxk';
-  String _tokenType = '';
-  String _accessToken = '';
+  static String _tokenType = '';
+  static String _accessToken = '';
 
-  _getToken() async {
+  Future<void> setToken() async {
+    await _getToken();
+    Timer.periodic(const Duration(minutes: 58), (timer) async {
+      await _getToken();
+    });
+  }
+
+  Future<void> _getToken() async {
     http.Response response = await http.post(
       Uri.parse('https://api.petfinder.com/v2/oauth2/token'),
       body: {
@@ -26,7 +35,6 @@ class PetFinderService {
 
   Future<PaginationModel> _getAnimals(
       {required String type, required String age, required int page}) async {
-
     PaginationModel pagination;
 
     http.Response response = await http.get(
@@ -62,15 +70,13 @@ class PetFinderService {
     print('PARAMETROS INVÁLIDOS');
     print(json.decode(response.body)['invalid-params']);
 
-    return pagination = PaginationModel(error: response.statusCode == 429 ? 'Database unavailable. Please try again later.' : json.decode(response.body)['detail']); 
-
+    return pagination = PaginationModel(
+        error: response.statusCode == 429
+            ? 'Database unavailable. Please try again later.'
+            : json.decode(response.body)['detail']);
   }
 
-   
   Future<TypeModel?> getTypes() async {
-    await _getToken();
-    // List<String> typesList = ['All'];
-    // Map<String,String> typesMap = {'All' : ''};
     http.Response response = await http.get(
       Uri.parse('https://api.petfinder.com/v2/types'),
       headers: {
@@ -83,14 +89,11 @@ class PetFinderService {
     }
     return null;
   }
-  
-  
+
   Future<PaginationModel> requestGetPets(
       {required String type, required String age, required int page}) async {
-    await _getToken();
     PaginationModel animalsPage =
         await _getAnimals(page: page, age: age, type: type);
     return animalsPage;
-    
   }
 }

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:mobx/mobx.dart';
 import 'package:pet_friendly/models/animal_model.dart';
 import 'package:pet_friendly/models/pagination_model.dart';
@@ -31,20 +33,20 @@ abstract class _HomeStore with Store {
   String? message;
 
   late final TypeModel? types;
-  @observable
   List<String> typesList = [];
 
   @action
   void setAgeFilter(String value) {
-    selectedAgeFilter = value == selectedAgeFilter ? '' : value;  
+    selectedAgeFilter = value == selectedAgeFilter ? '' : value;
     resetPage();
     runRequestGetPets();
   }
 
   @action
   void setTypeFilter(String value) {
+    value = types?.filterStringToParameter(value) ?? '';
     if (value != selectedTypeFilter) {
-      selectedTypeFilter = types?.filterStringToParameter(value) ?? ''; 
+      selectedTypeFilter = value;
       resetPage();
       runRequestGetPets();
     }
@@ -85,8 +87,8 @@ abstract class _HomeStore with Store {
 
   //toda vez que usar algum filtro, reseta a lista
   void resetPage() {
-    message = null;   
-    page =  1;
+    message = null;
+    page = 1;
     animalsList.clear();
     lastPage = false;
   }
@@ -98,9 +100,8 @@ abstract class _HomeStore with Store {
 
   //---------------------------------------------------------------------------------
 
-  @action
   Future<void> runRequestGetTypes() async {
-      types = await PetFinderService().getTypes();
-      typesList = types?.mapToFilterList() ?? [];
+    types = await PetFinderService().getTypes();
+    typesList = types?.mapToFilterList() ?? [];
   }
 }

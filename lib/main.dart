@@ -15,7 +15,8 @@ void setupLocators() {
 }
 
 Future<void> initData() async {
-  await GetIt.I<HomeStore>().runRequestGetTypes();
+  await PetFinderService().setToken();
+  await GetIt.I<HomeStore>().runRequestGetTypes(); 
 }
 
 class MyApp extends StatelessWidget {
