@@ -19,14 +19,10 @@ class ContainerInfo extends StatelessWidget {
       decoration: BoxDecoration(
         color: color.pinkLight,
         borderRadius: BorderRadius.only(
-          topLeft:
-              indexIsEven ? const Radius.circular(6) : const Radius.circular(0),
-          bottomLeft:
-              indexIsEven ? const Radius.circular(6) : const Radius.circular(0),
-          topRight:
-              indexIsEven ? const Radius.circular(0) : const Radius.circular(6),
-          bottomRight:
-              indexIsEven ? const Radius.circular(0) : const Radius.circular(6),
+          topLeft: _borderRadius(indexIsEven, false),
+          bottomLeft: _borderRadius(indexIsEven, false),
+          topRight: _borderRadius(indexIsEven, true),
+          bottomRight: _borderRadius(indexIsEven, true),
         ),
       ),
       child: Padding(
@@ -54,7 +50,8 @@ class ContainerInfo extends StatelessWidget {
                     image: animal.age != null
                         ? animal.age!.image
                         : path.ageYoungImage,
-                    title: animal.age != null ? animal.age!.title : 'Unknown age',
+                    title:
+                        animal.age != null ? animal.age!.title : 'Unknown age',
                   ),
                   const SizedBox(height: 8),
                   ItemInfo(
@@ -68,5 +65,11 @@ class ContainerInfo extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Radius _borderRadius(bool isEven, bool isRight) {
+    return isEven && isRight || !isEven && !isRight
+        ? const Radius.circular(0)
+        : const Radius.circular(6);
   }
 }

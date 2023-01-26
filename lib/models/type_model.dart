@@ -23,8 +23,8 @@ class TypeModel {
     return typeList;
   }
 
-  String filterStringToParameter(String type) {
-    String parameter = '';
+  String? filterStringToParameter(String type) {
+    String? parameter;
     typesMap.forEach((key, value) {
       if (type == key) {
         parameter = value;

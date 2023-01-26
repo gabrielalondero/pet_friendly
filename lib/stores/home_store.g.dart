@@ -125,12 +125,12 @@ mixin _$HomeStore on _HomeStore, Store {
     });
   }
 
-  late final _$runRequestGetPetsAsyncAction =
-      AsyncAction('_HomeStore.runRequestGetPets', context: context);
+  late final _$getPetsAsyncAction =
+      AsyncAction('_HomeStore.getPets', context: context);
 
   @override
-  Future<void> runRequestGetPets() {
-    return _$runRequestGetPetsAsyncAction.run(() => super.runRequestGetPets());
+  Future<void> getPets() {
+    return _$getPetsAsyncAction.run(() => super.getPets());
   }
 
   late final _$_HomeStoreActionController =

@@ -4,7 +4,6 @@ import 'package:get_it/get_it.dart';
 import 'package:pet_friendly/screens/home/widgets/age_filter/age_filters.dart';
 import 'package:pet_friendly/screens/home/widgets/card/custom_card.dart';
 import 'package:pet_friendly/screens/home/widgets/custom_dropdown_search.dart';
-import 'package:pet_friendly/screens/home/widgets/custom_text_field.dart';
 import 'package:pet_friendly/screens/widgets/custom_app_bar.dart';
 import 'package:pet_friendly/shared/all_colors.dart';
 import 'package:pet_friendly/stores/home_store.dart';

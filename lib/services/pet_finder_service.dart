@@ -33,9 +33,9 @@ class PetFinderService {
     _accessToken = result['access_token'] ?? '';
   }
 
-  Future<PaginationModel> _getAnimals(
+  Future<PaginationModel> getPets(
       {required String type, required String age, required int page}) async {
-    PaginationModel pagination;
+    PaginationModel animalsPage;
 
     http.Response response = await http.get(
       //parâmetros type e age podem ser vazios
@@ -55,22 +55,22 @@ class PetFinderService {
           );
         },
       );
-      pagination = PaginationModel.fromJson(
+      animalsPage = PaginationModel.fromJson(
           json: json.decode(response.body)['pagination'], animalsList: animals);
 
       print(animals);
-      print(pagination);
+      print(animalsPage);
 
       //var result2 = json.decode(response.body)['animals'];
       //print(result2[1]['breeds']);
       //print(result2[1]['colors']);
 
-      return pagination;
+      return animalsPage;
     }
     print('PARAMETROS INVÁLIDOS');
     print(json.decode(response.body)['invalid-params']);
 
-    return pagination = PaginationModel(
+    return animalsPage = PaginationModel(
         error: response.statusCode == 429
             ? 'Database unavailable. Please try again later.'
             : json.decode(response.body)['detail']);
@@ -90,10 +90,4 @@ class PetFinderService {
     return null;
   }
 
-  Future<PaginationModel> requestGetPets(
-      {required String type, required String age, required int page}) async {
-    PaginationModel animalsPage =
-        await _getAnimals(page: page, age: age, type: type);
-    return animalsPage;
-  }
 }

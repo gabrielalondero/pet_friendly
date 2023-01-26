@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:mobx/mobx.dart';
 import 'package:pet_friendly/models/animal_model.dart';
 import 'package:pet_friendly/models/pagination_model.dart';
@@ -10,6 +9,7 @@ part 'home_store.g.dart';
 class HomeStore = _HomeStore with _$HomeStore;
 
 abstract class _HomeStore with Store {
+  late final TypeModel? types;
 
   @observable
   List<AnimalModel> animalsList = [];
@@ -32,14 +32,13 @@ abstract class _HomeStore with Store {
   @observable
   String? message;
 
-  late final TypeModel? types;
   List<String> typesList = [];
 
   @action
   void setAgeFilter(String value) {
     selectedAgeFilter = value == selectedAgeFilter ? '' : value;
     resetPage();
-    runRequestGetPets();
+    getPets();
   }
 
   @action
@@ -48,14 +47,14 @@ abstract class _HomeStore with Store {
     if (value != selectedTypeFilter) {
       selectedTypeFilter = value;
       resetPage();
-      runRequestGetPets();
+      getPets();
     }
   }
 
   @action
-  Future<void> runRequestGetPets() async {
+  Future<void> getPets() async {
     loading = true;
-    PaginationModel paginationModel = await PetFinderService().requestGetPets(
+    PaginationModel paginationModel = await PetFinderService().getPets(
       age: selectedAgeFilter,
       type: selectedTypeFilter,
       page: page,
@@ -82,7 +81,7 @@ abstract class _HomeStore with Store {
   @action
   void loadingNextPage() {
     page++;
-    runRequestGetPets();
+    getPets();
   }
 
   //toda vez que usar algum filtro, reseta a lista
@@ -100,7 +99,7 @@ abstract class _HomeStore with Store {
 
   //---------------------------------------------------------------------------------
 
-  Future<void> runRequestGetTypes() async {
+  Future<void> getTypes() async {
     types = await PetFinderService().getTypes();
     typesList = types?.mapToFilterList() ?? [];
   }
