@@ -3,6 +3,7 @@ import 'package:get_it/get_it.dart';
 import 'package:pet_friendly/screens/details/details_screen.dart';
 import 'package:pet_friendly/services/pet_finder_service.dart';
 import 'package:pet_friendly/screens/home/home_screen.dart';
+import 'package:pet_friendly/stores/details_store.dart';
 import 'package:pet_friendly/stores/home_store.dart';
 
 void main() async {
@@ -12,6 +13,7 @@ void main() async {
 }
 
 void setupLocators() {
+  GetIt.I.registerSingleton(DetailsStore());
   GetIt.I.registerSingleton(HomeStore());
 }
 
