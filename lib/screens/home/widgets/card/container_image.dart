@@ -21,7 +21,7 @@ class ContainerImage extends StatelessWidget {
                 ? NetworkImage(animal.images[0])
                 : const NetworkImage(path.defaultNetworkImage),
             fit: BoxFit.cover),
-        color: color.greyLight,
+        color: color.grey,
         borderRadius: BorderRadius.circular(15),
       ),
     );

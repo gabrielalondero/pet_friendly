@@ -33,7 +33,7 @@ class CustomDropdownSearch extends StatelessWidget {
               decoration: InputDecoration(
                 hintText: 'Search an option',
                 focusColor: Colors.amber,
-                hintStyle: TextStyle(color: color.greyLight, fontSize: 12),
+                hintStyle: TextStyle(color: color.grey, fontSize: 12),
               )),
           showSearchBox: true,
           showSelectedItems: true,
@@ -73,9 +73,9 @@ class CustomDropdownSearch extends StatelessWidget {
         ),
         focusedBorder: InputBorder.none,
         labelText: 'Find your new friend',
-        labelStyle: TextStyle(color: color.greyLight, fontSize: 12),
+        labelStyle: TextStyle(color: color.grey, fontSize: 12),
         hintText: 'E.g.: cat',
-        hintStyle: TextStyle(color: color.greyLight, fontSize: 12),
+        hintStyle: TextStyle(color: color.grey, fontSize: 12),
       ),
     );
 

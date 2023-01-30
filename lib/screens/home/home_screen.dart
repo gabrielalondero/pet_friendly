@@ -62,7 +62,7 @@ class HomeScreen extends StatelessWidget {
                             children: [
                               Icon(
                                 Icons.pets_outlined,
-                                color: color.greyLight,
+                                color: color.grey,
                                 size: 100,
                               ),
                               const SizedBox(height: 20),
