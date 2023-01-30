@@ -4,6 +4,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 import 'package:pet_friendly/screens/details/about_screen.dart';
 import 'package:pet_friendly/screens/details/contact_screen.dart';
+import 'package:pet_friendly/screens/details/widgets/titles.dart';
 import 'package:pet_friendly/screens/widgets/custom_app_bar.dart';
 import 'package:pet_friendly/shared/all_colors.dart';
 import 'package:pet_friendly/shared/images_path.dart' as path;
@@ -13,7 +14,7 @@ class DetailsScreen extends StatelessWidget {
   DetailsScreen({super.key});
 
   final DetailsStore detailsStore = GetIt.I<DetailsStore>();
-  
+
   final color = AllColors();
 
   final List<Widget> _screens = [
@@ -36,18 +37,27 @@ class DetailsScreen extends StatelessWidget {
           child: CustomAppBar(color: color.pinkLight.withOpacity(0.53)),
         ),
         //extendBodyBehindAppBar: true,
+        
         body: Stack(
           children: [
             SingleChildScrollView(
-              child: Column(
-                children: [
-                  Observer(
-                    builder: (_) {
-                      return _screens[detailsStore.currentPage];
-                    },
-                  ),
-                  const SizedBox(height: 90),
-                ],
+              child: Padding(
+                padding: const EdgeInsets.only(right: 25, left: 25, top: 5, bottom: 95),
+                child: Column(
+                  children: [
+                    const SizedBox(height: 22),
+                    Titles(
+                      name: 'Nebula',
+                      breed: 'American Shorthair',
+                      status: 'Adoptable',
+                    ),
+                    Observer(
+                      builder: (_) {
+                        return _screens[detailsStore.currentPage];
+                      },
+                    ),
+                  ],
+                ),
               ),
             ),
             Align(
@@ -108,6 +118,12 @@ class DetailsScreen extends StatelessWidget {
     );
   }
 
+  
+  
+  
+  
+  
+  
   Widget _behindContainer({required int page}) {
     return Observer(builder: (_) {
       return Container(
@@ -124,8 +140,11 @@ class DetailsScreen extends StatelessWidget {
     });
   }
 
-
-
+  
+  
+  
+  
+  
   Widget _itemContainer(
       {required int page, required String image, required String text}) {
     return Observer(builder: (_) {
@@ -170,4 +189,8 @@ class DetailsScreen extends StatelessWidget {
       );
     });
   }
+
+
+
+
 }
