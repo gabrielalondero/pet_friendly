@@ -4,6 +4,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 import 'package:pet_friendly/screens/details/about_screen.dart';
 import 'package:pet_friendly/screens/details/contact_screen.dart';
+import 'package:pet_friendly/screens/details/widgets/carousel/carousel.dart';
 import 'package:pet_friendly/screens/details/widgets/titles.dart';
 import 'package:pet_friendly/screens/widgets/custom_app_bar.dart';
 import 'package:pet_friendly/shared/all_colors.dart';
@@ -36,28 +37,32 @@ class DetailsScreen extends StatelessWidget {
           preferredSize: const Size.fromHeight(60),
           child: CustomAppBar(color: color.pinkLight.withOpacity(0.53)),
         ),
-        //extendBodyBehindAppBar: true,
+        extendBodyBehindAppBar: true,
         
         body: Stack(
           children: [
             SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.only(right: 25, left: 25, top: 5, bottom: 95),
-                child: Column(
-                  children: [
-                    const SizedBox(height: 22),
-                    Titles(
-                      name: 'Nebula',
-                      breed: 'American Shorthair',
-                      status: 'Adoptable',
+              child: Column(
+                children: [
+                  Carousel(),
+                  Padding(
+                    padding: const EdgeInsets.only(right: 25, left: 25, top: 5, bottom: 95),
+                    child: Column(
+                      children: [
+                        Titles(
+                          name: 'Nebula',
+                          breed: 'American Shorthair',
+                          status: 'Adoptable',
+                        ),
+                        Observer(
+                          builder: (_) {
+                            return _screens[detailsStore.currentPage];
+                          },
+                        ),
+                      ],
                     ),
-                    Observer(
-                      builder: (_) {
-                        return _screens[detailsStore.currentPage];
-                      },
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
             Align(
@@ -176,7 +181,7 @@ class DetailsScreen extends StatelessWidget {
                 style: TextStyle(
                   color: page == detailsStore.currentPage
                       ? color.pink
-                      : color.greyLight,
+                      : color.grey,
                   fontSize: 12,
                   fontWeight: page == detailsStore.currentPage
                       ? FontWeight.w500
