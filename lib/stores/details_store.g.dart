@@ -40,6 +40,17 @@ mixin _$DetailsStore on _DetailsStore, Store {
   }
 
   @override
+  void resetPage() {
+    final _$actionInfo = _$_DetailsStoreActionController.startAction(
+        name: '_DetailsStore.resetPage');
+    try {
+      return super.resetPage();
+    } finally {
+      _$_DetailsStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 currentPage: ${currentPage}

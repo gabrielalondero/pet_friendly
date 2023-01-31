@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:pet_friendly/models/animal_model.dart';
+import 'package:pet_friendly/models/contact_model.dart';
 import 'package:pet_friendly/screens/details/widgets/custom_divider.dart';
 import 'package:pet_friendly/screens/details/widgets/info_item.dart';
 import 'package:pet_friendly/screens/details/widgets/subtitle.dart';
 import 'package:pet_friendly/shared/images_path.dart' as path;
 
 class ContactScreen extends StatelessWidget {
-  const ContactScreen({super.key});
+  const ContactScreen({super.key, required this.animal});
+
+  final AnimalModel animal;
 
   @override
   Widget build(BuildContext context) {
+    ContactModel? contact = animal.contact;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -16,21 +21,22 @@ class ContactScreen extends StatelessWidget {
         const Subtitle(subtitle: 'Contact'),
         const SizedBox(height: 12),
         InfoItem(
-          text: 'petfindertechsupport@gmail.com',
+          text: contact.email,
           image: path.emailImage,
           verticalMargin: 3,
         ),
         InfoItem(
-          text: '555-555-5555',
+          text: contact.phone,
           image: path.phoneImage,
           verticalMargin: 3,
         ),
         InfoItem(
-          text: 'Jersey City, NJ - US',
+          text: '${contact.city}, ${contact.state}, ${contact.country}',
           image: path.addressImage,
           verticalMargin: 3,
         ),
       ],
     );
   }
+
 }

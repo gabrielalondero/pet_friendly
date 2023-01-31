@@ -38,11 +38,13 @@ class InfoItem extends StatelessWidget {
             width: 20,
           ),
           const SizedBox(width: 5),
-          Text(
-            text,
-            style: const TextStyle(
-              fontSize: 11,
-              fontWeight: FontWeight.w400,
+          Flexible(
+            child: Text(
+              text,
+              style: const TextStyle(
+                fontSize: 11,
+                fontWeight: FontWeight.w400,
+              ),
             ),
           )
         ],

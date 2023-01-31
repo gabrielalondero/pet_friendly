@@ -1,5 +1,4 @@
 import 'package:pet_friendly/models/age_model.dart';
-
 import 'contact_model.dart';
 
 class AnimalModel {
@@ -14,7 +13,7 @@ class AnimalModel {
   String breeds = '';
   String colors = '';
 
-  AgeModel? age;
+  AgeModel age;
 
   List<String> images = [];
   List<String> videos = [];
@@ -23,7 +22,7 @@ class AnimalModel {
   bool spayedNeutered = false;
   bool houseTrained = false;
 
-  ContactModel? contact;
+  ContactModel contact;
 
   AnimalModel({
     required this.id,
@@ -60,7 +59,7 @@ class AnimalModel {
     }
 
     List<String> breedsList = [];
-    String breedsResult = '';
+    String breedsResult = 'Breed not informed';
     if (json['breeds'] != null) {
       (json['breeds'] as Map).forEach((key, value) {
         if (value != null && key == 'primary') {
@@ -70,29 +69,40 @@ class AnimalModel {
           breedsList.add(value);
         }
       });
-      breedsResult = breedsList.join(', ');
+      if (breedsList.isNotEmpty) {
+        breedsResult = breedsList.join(', ');
+      }
     }
 
     List<String> colorsList = [];
-    String colorsResult = '';
+    String colorsResult = 'Color not informed';
     if (json['colors'] != null) {
       (json['colors'] as Map).forEach((key, value) {
         if (value != null) {
           colorsList.add(value);
         }
       });
-      colorsResult = colorsList.join(', ');
+      if (colorsList.isNotEmpty) {
+        colorsResult = colorsList.join(', ');
+      }
+    }
+
+    String descriptionString = '';
+    //converter escape em caracter
+    if (json['description'] != null) {
+      String text = json['description'];
+      descriptionString = text.replaceAll(RegExp(r'(&amp;#39;|&#39;)'), '\'').replaceAll('&#34;', '"');
     }
 
     return AnimalModel(
       id: json['id'],
-      name: json['name'] ?? '',
-      type: json['type'] ?? '',
+      name: json['name'] ?? 'Unknown name',
+      type: json['type'] ?? 'Unknown type',
       age: AgeModel.fromJson(json['age']),
-      gender: json['gender'] ?? '',
-      size: json['size'] ?? '',
-      description: json['description'] ?? '',
-      status: json['status'] ?? '',
+      gender: json['gender'] ?? 'Unknown',
+      size: json['size'] ?? 'Unknown',
+      description: descriptionString,
+      status: json['status'] ?? 'adoptable',
       breeds: breedsResult,
       colors: colorsResult,
       images: imagesList,

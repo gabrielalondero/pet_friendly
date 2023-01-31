@@ -18,12 +18,15 @@ class Titles extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(
-              name,
-              style: TextStyle(
-                  color: color.textColor,
-                  fontSize: 24,
-                  fontWeight: FontWeight.w500),
+            Expanded(
+              child: Text(
+                  name,
+                  style: TextStyle(
+                      color: color.textColor,
+                      fontSize: 24,
+                      fontWeight: FontWeight.w500),
+                ),
+              
             ),
             Text(
               status,
@@ -32,7 +35,7 @@ class Titles extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: 5),
+        const SizedBox(height: 10),
         Text(
           breed,
           style: TextStyle(

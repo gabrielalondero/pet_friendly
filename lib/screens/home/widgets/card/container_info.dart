@@ -47,11 +47,8 @@ class ContainerInfo extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   ItemInfo(
-                    image: animal.age != null
-                        ? animal.age!.image
-                        : path.ageYoungImage,
-                    title:
-                        animal.age != null ? animal.age!.title : 'Unknown age',
+                    image: animal.age.image,
+                    title: animal.age.title,
                   ),
                   const SizedBox(height: 8),
                   ItemInfo(
