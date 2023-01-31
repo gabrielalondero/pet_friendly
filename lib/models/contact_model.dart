@@ -16,9 +16,10 @@ class ContactModel {
 
 
   factory ContactModel.fromJson(Map<String, dynamic> json) {
+    String defaultInfo = 'Not informed';
     return ContactModel(
-      email: json['email'] ?? '',
-      phone: json['phone'] ?? '',
+      email: json['email'] ?? defaultInfo,
+      phone: json['phone'] ?? defaultInfo,
       city: json['address']['city'] ?? '',
       state: json['address']['state'] ?? '',
       country: json['address']['country'] ?? '',

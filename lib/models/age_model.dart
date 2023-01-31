@@ -6,8 +6,8 @@ class AgeModel {
 
   AgeModel({
     this.id,
-    this.title = '',
-    this.image = '',
+    this.title = 'Unknown age',
+    this.image = path.ageYoungImage,
   });
 
   factory AgeModel.fromJson(String ageTitle) {

@@ -11,4 +11,7 @@ abstract class _DetailsStore with Store {
   void togglePage(int value) {
     value != currentPage ? currentPage = value : null;
   }
+
+  @action 
+  void resetPage() => currentPage = 0;
 }

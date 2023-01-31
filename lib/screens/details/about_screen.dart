@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pet_friendly/models/animal_model.dart';
 import 'package:pet_friendly/screens/details/widgets/custom_divider.dart';
 import 'package:pet_friendly/screens/details/widgets/info_item.dart';
 import 'package:pet_friendly/screens/details/widgets/info_box.dart';
@@ -6,7 +7,9 @@ import 'package:pet_friendly/screens/details/widgets/subtitle.dart';
 import 'package:pet_friendly/shared/images_path.dart' as path;
 
 class AboutScreen extends StatelessWidget {
-  const AboutScreen({super.key});
+  const AboutScreen({super.key, required this.animal});
+
+  final AnimalModel animal;
 
   @override
   Widget build(BuildContext context) {
@@ -17,9 +20,18 @@ class AboutScreen extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            InfoBox(image: path.ageYoungImage, title: 'Young'),
-            InfoBox(image: path.sexGenderImage, title: 'Female'),
-            InfoBox(image: path.sizeImage, title: 'Medium'),
+            InfoBox(
+              image: animal.age.image,
+              title: animal.age.title,
+            ),
+            InfoBox(
+              image: path.sexGenderImage,
+              title: animal.gender,
+            ),
+            InfoBox(
+              image: path.sizeImage,
+              title: animal.size,
+            ),
           ],
         ),
         CustomDivider(),
@@ -35,55 +47,64 @@ class AboutScreen extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Subtitle(subtitle: 'Description'),
-        const SizedBox(height: 12),
-        const Text(
-          'Nebula is a shorthaired, shy cat. She is very affectionate once she warms up to you.',
-          style: TextStyle(
-            fontSize: 12,
-            fontWeight: FontWeight.w400,
+        const SizedBox(height: 13),
+        if (animal.description.isNotEmpty)
+          Padding(
+            padding: const EdgeInsets.only(bottom: 16),
+            child: Text(
+              animal.description,
+              style: const TextStyle(
+                fontSize: 12,
+                fontWeight: FontWeight.w400,
+              ),
+            ),
           ),
-        ),
-        const SizedBox(height: 16),
-        Center(
-          child: Wrap(
-            direction: Axis.horizontal,
-            runSpacing: 10,
-            children: [
-              InfoItem(text: 'Neutered', image: path.neuteredImage),
+        Wrap(
+          direction: Axis.horizontal,
+          alignment: WrapAlignment.start,
+          runSpacing: 10,
+          children: [
+            InfoItem(
+              text: animal.spayedNeutered ? 'Neutered' : 'Not neutered',
+              image: path.neuteredImage,
+            ),
+            if (animal.houseTrained)
               InfoItem(text: 'House trained', image: path.houseTrainedImage),
-              InfoItem(text: 'Brown / Chocolate', image: path.pelageColorImage),
-            ],
-          ),
+            InfoItem(text: animal.colors, image: path.pelageColorImage),
+          ],
         ),
       ],
     );
   }
 
   Widget _characteristics() {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Subtitle(subtitle: 'Other characteristics'),
-        const SizedBox(height: 15),
-        SizedBox(
-          height: 32,
-          child: ListView.builder(
-            shrinkWrap: true,
-            scrollDirection: Axis.horizontal,
-            itemCount: 5,
-            itemBuilder: (context, index) {
-              return InfoItem(
-                image: path.pawHeartImage,
-                text: 'Intelligent',
-                withBackground: true,
-                horizontalMargin: 2.5,
-                horizontalPadding: 5,
-              );
-            },
+    if (animal.tags.isNotEmpty) {
+      return Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Subtitle(subtitle: 'Other characteristics'),
+          const SizedBox(height: 15),
+          SizedBox(
+            height: 32,
+            child: ListView.builder(
+              shrinkWrap: true,
+              scrollDirection: Axis.horizontal,
+              itemCount: animal.tags.length,
+              itemBuilder: (context, index) {
+                return InfoItem(
+                  image: path.pawHeartImage,
+                  text: animal.tags[index],
+                  withBackground: true,
+                  horizontalMargin: 2.5,
+                  horizontalPadding: 5,
+                );
+              },
+            ),
           ),
-        ),
-      ],
-    );
+        ],
+      );
+    }
+    return const SizedBox();
   }
 }

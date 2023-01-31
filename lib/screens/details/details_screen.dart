@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
+import 'package:pet_friendly/models/animal_model.dart';
 import 'package:pet_friendly/screens/details/about_screen.dart';
 import 'package:pet_friendly/screens/details/contact_screen.dart';
 import 'package:pet_friendly/screens/details/widgets/carousel/carousel.dart';
@@ -12,25 +12,19 @@ import 'package:pet_friendly/shared/images_path.dart' as path;
 import 'package:pet_friendly/stores/details_store.dart';
 
 class DetailsScreen extends StatelessWidget {
-  DetailsScreen({super.key});
+  DetailsScreen({super.key, required this.animal});
 
+  final AnimalModel animal;
   final DetailsStore detailsStore = GetIt.I<DetailsStore>();
 
   final color = AllColors();
 
-  final List<Widget> _screens = [
-    const AboutScreen(),
-    const ContactScreen(),
-  ];
-
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      statusBarColor: color.backgroundColor,
-      statusBarBrightness: Brightness.light,
-      statusBarIconBrightness: Brightness.dark,
-    ));
-
+    final List<Widget> _screens = [
+      AboutScreen(animal: animal),
+      ContactScreen(animal: animal),
+    ];
     return SafeArea(
       child: Scaffold(
         appBar: PreferredSize(
@@ -38,7 +32,6 @@ class DetailsScreen extends StatelessWidget {
           child: CustomAppBar(color: color.pinkLight.withOpacity(0.53)),
         ),
         extendBodyBehindAppBar: true,
-        
         body: Stack(
           children: [
             SingleChildScrollView(
@@ -46,13 +39,14 @@ class DetailsScreen extends StatelessWidget {
                 children: [
                   Carousel(),
                   Padding(
-                    padding: const EdgeInsets.only(right: 25, left: 25, top: 5, bottom: 95),
+                    padding: const EdgeInsets.only(
+                        right: 25, left: 25, top: 5, bottom: 95),
                     child: Column(
                       children: [
                         Titles(
-                          name: 'Nebula',
-                          breed: 'American Shorthair',
-                          status: 'Adoptable',
+                          name: animal.name,
+                          breed: '${animal.type} | ${animal.breeds}',
+                          status: animal.status,
                         ),
                         Observer(
                           builder: (_) {
@@ -123,12 +117,6 @@ class DetailsScreen extends StatelessWidget {
     );
   }
 
-  
-  
-  
-  
-  
-  
   Widget _behindContainer({required int page}) {
     return Observer(builder: (_) {
       return Container(
@@ -145,11 +133,6 @@ class DetailsScreen extends StatelessWidget {
     });
   }
 
-  
-  
-  
-  
-  
   Widget _itemContainer(
       {required int page, required String image, required String text}) {
     return Observer(builder: (_) {
@@ -194,8 +177,4 @@ class DetailsScreen extends StatelessWidget {
       );
     });
   }
-
-
-
-
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
+import 'package:pet_friendly/screens/details/details_screen.dart';
 import 'package:pet_friendly/screens/home/widgets/age_filter/age_filters.dart';
 import 'package:pet_friendly/screens/home/widgets/card/custom_card.dart';
 import 'package:pet_friendly/screens/home/widgets/custom_dropdown_search.dart';
@@ -28,7 +29,6 @@ class HomeScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             CustomDropdownSearch(),
-            //const CustomTextField(),
             const SizedBox(height: 22),
             const AgeFilters(),
             const SizedBox(height: 20),
@@ -40,9 +40,17 @@ class HomeScreen extends StatelessWidget {
                     itemBuilder: (_, index) {
                       return Observer(builder: (context) {
                         if (index < homeStore.animalsList.length) {
-                          return CustomCard(
-                            animal: homeStore.animalsList[index],
-                            index: index,
+                          return GestureDetector(
+                            onTap: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                builder: (_) => DetailsScreen(
+                                    animal: homeStore.animalsList[index]),
+                              ));
+                            },
+                            child: CustomCard(
+                              animal: homeStore.animalsList[index],
+                              index: index,
+                            ),
                           );
                         }
                         //ao colocar todos os itens de uma página,
