@@ -91,7 +91,9 @@ class AnimalModel {
     //converter escape em caracter
     if (json['description'] != null) {
       String text = json['description'];
-      descriptionString = text.replaceAll(RegExp(r'(&amp;#39;|&#39;)'), '\'').replaceAll('&#34;', '"');
+      descriptionString = text
+          .replaceAll(RegExp(r'(&amp;#39;|&#39;|&#039;)'), '\'')
+          .replaceAll('&#34;', '"');
     }
 
     return AnimalModel(
