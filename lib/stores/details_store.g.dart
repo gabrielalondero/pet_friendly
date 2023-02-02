@@ -25,8 +25,35 @@ mixin _$DetailsStore on _DetailsStore, Store {
     });
   }
 
+  late final _$currentImageAtom =
+      Atom(name: '_DetailsStore.currentImage', context: context);
+
+  @override
+  int get currentImage {
+    _$currentImageAtom.reportRead();
+    return super.currentImage;
+  }
+
+  @override
+  set currentImage(int value) {
+    _$currentImageAtom.reportWrite(value, super.currentImage, () {
+      super.currentImage = value;
+    });
+  }
+
   late final _$_DetailsStoreActionController =
       ActionController(name: '_DetailsStore', context: context);
+
+  @override
+  void listenCarousel() {
+    final _$actionInfo = _$_DetailsStoreActionController.startAction(
+        name: '_DetailsStore.listenCarousel');
+    try {
+      return super.listenCarousel();
+    } finally {
+      _$_DetailsStoreActionController.endAction(_$actionInfo);
+    }
+  }
 
   @override
   void togglePage(int value) {
@@ -40,11 +67,11 @@ mixin _$DetailsStore on _DetailsStore, Store {
   }
 
   @override
-  void resetPage() {
+  void resetDetails() {
     final _$actionInfo = _$_DetailsStoreActionController.startAction(
-        name: '_DetailsStore.resetPage');
+        name: '_DetailsStore.resetDetails');
     try {
-      return super.resetPage();
+      return super.resetDetails();
     } finally {
       _$_DetailsStoreActionController.endAction(_$actionInfo);
     }
@@ -53,7 +80,8 @@ mixin _$DetailsStore on _DetailsStore, Store {
   @override
   String toString() {
     return '''
-currentPage: ${currentPage}
+currentPage: ${currentPage},
+currentImage: ${currentImage}
     ''';
   }
 }

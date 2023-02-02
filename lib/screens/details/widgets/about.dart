@@ -6,8 +6,8 @@ import 'package:pet_friendly/screens/details/widgets/info_box.dart';
 import 'package:pet_friendly/screens/details/widgets/subtitle.dart';
 import 'package:pet_friendly/shared/images_path.dart' as path;
 
-class AboutScreen extends StatelessWidget {
-  const AboutScreen({super.key, required this.animal});
+class About extends StatelessWidget {
+  const About({super.key, required this.animal});
 
   final AnimalModel animal;
 

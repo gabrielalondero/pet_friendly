@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 import 'package:pet_friendly/models/animal_model.dart';
-import 'package:pet_friendly/screens/details/about_screen.dart';
-import 'package:pet_friendly/screens/details/contact_screen.dart';
+import 'package:pet_friendly/screens/details/widgets/about.dart';
+import 'package:pet_friendly/screens/details/widgets/contact.dart';
 import 'package:pet_friendly/screens/details/widgets/carousel/carousel.dart';
 import 'package:pet_friendly/screens/details/widgets/titles.dart';
 import 'package:pet_friendly/screens/widgets/custom_app_bar.dart';
@@ -21,9 +21,9 @@ class DetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<Widget> _screens = [
-      AboutScreen(animal: animal),
-      ContactScreen(animal: animal),
+    final List<Widget> _pages = [
+      About(animal: animal),
+      Contact(animal: animal),
     ];
     return SafeArea(
       child: Scaffold(
@@ -37,7 +37,7 @@ class DetailsScreen extends StatelessWidget {
             SingleChildScrollView(
               child: Column(
                 children: [
-                  Carousel(),
+                  Carousel(images: animal.images),
                   Padding(
                     padding: const EdgeInsets.only(
                         right: 25, left: 25, top: 5, bottom: 95),
@@ -50,7 +50,7 @@ class DetailsScreen extends StatelessWidget {
                         ),
                         Observer(
                           builder: (_) {
-                            return _screens[detailsStore.currentPage];
+                            return _pages[detailsStore.currentPage];
                           },
                         ),
                       ],
