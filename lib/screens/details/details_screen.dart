@@ -2,10 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 import 'package:pet_friendly/models/animal_model.dart';
-import 'package:pet_friendly/screens/details/widgets/about.dart';
-import 'package:pet_friendly/screens/details/widgets/contact.dart';
+import 'package:pet_friendly/models/contact_model.dart';
 import 'package:pet_friendly/screens/details/widgets/carousel/carousel.dart';
-import 'package:pet_friendly/screens/details/widgets/titles.dart';
 import 'package:pet_friendly/screens/widgets/custom_app_bar.dart';
 import 'package:pet_friendly/shared/all_colors.dart';
 import 'package:pet_friendly/shared/images_path.dart' as path;
@@ -22,8 +20,8 @@ class DetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final List<Widget> _pages = [
-      About(animal: animal),
-      Contact(animal: animal),
+      _about(animal: animal),
+      _contact(animal: animal),
     ];
     return SafeArea(
       child: Scaffold(
@@ -43,7 +41,7 @@ class DetailsScreen extends StatelessWidget {
                         right: 25, left: 25, top: 5, bottom: 95),
                     child: Column(
                       children: [
-                        Titles(
+                        _titles(
                           name: animal.name,
                           breed: '${animal.type} | ${animal.breeds}',
                           status: animal.status,
@@ -114,6 +112,253 @@ class DetailsScreen extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+
+  Widget _contact({required AnimalModel animal}) {
+    ContactModel? contact = animal.contact;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _customDivider(),
+        _subtitle(subtitle: 'Contact'),
+        const SizedBox(height: 12),
+        _infoItem(
+          text: contact.email,
+          image: path.emailImage,
+          verticalMargin: 3,
+        ),
+        _infoItem(
+          text: contact.phone,
+          image: path.phoneImage,
+          verticalMargin: 3,
+        ),
+        _infoItem(
+          text: '${contact.city}, ${contact.state}, ${contact.country}',
+          image: path.addressImage,
+          verticalMargin: 3,
+        ),
+      ],
+    );
+  }
+
+  Widget _about({required AnimalModel animal}) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const SizedBox(height: 22),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            _infoBox(
+              image: animal.age.image,
+              title: animal.age.title,
+            ),
+            _infoBox(
+              image: path.sexGenderImage,
+              title: animal.gender,
+            ),
+            _infoBox(
+              image: path.sizeImage,
+              title: animal.size,
+            ),
+          ],
+        ),
+        _customDivider(),
+        _description(),
+        _customDivider(),
+        _characteristics(),
+      ],
+    );
+  }
+
+  Widget _description() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _subtitle(subtitle: 'Description'),
+        const SizedBox(height: 13),
+        if (animal.description.isNotEmpty)
+          Padding(
+            padding: const EdgeInsets.only(bottom: 16),
+            child: Text(
+              animal.description,
+              style: const TextStyle(
+                fontSize: 12,
+                fontWeight: FontWeight.w400,
+              ),
+            ),
+          ),
+        Wrap(
+          direction: Axis.horizontal,
+          alignment: WrapAlignment.start,
+          runSpacing: 10,
+          children: [
+            _infoItem(
+              text: animal.spayedNeutered ? 'Neutered' : 'Not neutered',
+              image: path.neuteredImage,
+            ),
+            if (animal.houseTrained)
+              _infoItem(text: 'House trained', image: path.houseTrainedImage),
+            _infoItem(text: animal.colors, image: path.pelageColorImage),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Widget _characteristics() {
+    if (animal.tags.isNotEmpty) {
+      return Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _subtitle(subtitle: 'Other characteristics'),
+          const SizedBox(height: 15),
+          SizedBox(
+            height: 32,
+            child: ListView.builder(
+              shrinkWrap: true,
+              scrollDirection: Axis.horizontal,
+              itemCount: animal.tags.length,
+              itemBuilder: (context, index) {
+                return _infoItem(
+                  image: path.pawHeartImage,
+                  text: animal.tags[index],
+                  withBackground: true,
+                  horizontalMargin: 2.5,
+                  horizontalPadding: 5,
+                );
+              },
+            ),
+          ),
+        ],
+      );
+    }
+    return const SizedBox();
+  }
+
+  Widget _titles(
+      {required String name, required String breed, required String status}) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Expanded(
+              child: Text(
+                name,
+                style: TextStyle(
+                    color: color.textColor,
+                    fontSize: 24,
+                    fontWeight: FontWeight.w500),
+              ),
+            ),
+            Text(
+              status,
+              style: TextStyle(
+                  color: color.pink, fontSize: 14, fontWeight: FontWeight.w500),
+            ),
+          ],
+        ),
+        const SizedBox(height: 10),
+        Text(
+          breed,
+          style: TextStyle(
+            color: color.textColor,
+            fontSize: 16,
+            fontWeight: FontWeight.w400,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _subtitle({required String subtitle}) {
+    return Text(
+      subtitle,
+      style: const TextStyle(
+        fontSize: 14,
+        fontWeight: FontWeight.w500,
+      ),
+    );
+  }
+
+  Widget _infoBox({required String image, required String title}) {
+    return Container(
+      height: 76,
+      width: 84,
+      margin: const EdgeInsets.only(right: 7, left: 7),
+      decoration: BoxDecoration(
+          color: color.white,
+          borderRadius: const BorderRadius.all(Radius.circular(5)),
+          border: Border.all(color: color.pinkLight)),
+      child: Padding(
+        padding: const EdgeInsets.only(bottom: 2, top: 8),
+        child: Column(
+          children: [
+            Image.asset(
+              image,
+              height: 40,
+              width: 47,
+            ),
+            Expanded(
+                child: Center(
+              child: Text(
+                title,
+                style: TextStyle(color: color.textColor, fontSize: 12),
+              ),
+            )),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _infoItem({
+    required String text,
+    required String image,
+    bool withBackground = false,
+    double horizontalMargin = 8,
+    double verticalMargin = 0,
+    double horizontalPadding = 0,
+  }) {
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(5),
+        color: withBackground ? color.white : Colors.transparent,
+      ),
+      margin: EdgeInsets.symmetric(
+          horizontal: horizontalMargin, vertical: verticalMargin),
+      padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Image.asset(
+            image,
+            height: 20,
+            width: 20,
+          ),
+          const SizedBox(width: 5),
+          Flexible(
+            child: Text(
+              text,
+              style: const TextStyle(
+                fontSize: 11,
+                fontWeight: FontWeight.w400,
+              ),
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget _customDivider() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 12),
+      child: Divider(color: color.pinkLight),
     );
   }
 
