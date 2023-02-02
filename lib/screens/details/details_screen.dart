@@ -37,7 +37,7 @@ class DetailsScreen extends StatelessWidget {
             SingleChildScrollView(
               child: Column(
                 children: [
-                  Carousel(),
+                  Carousel(images: animal.images),
                   Padding(
                     padding: const EdgeInsets.only(
                         right: 25, left: 25, top: 5, bottom: 95),
