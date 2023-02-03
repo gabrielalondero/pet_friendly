@@ -54,9 +54,21 @@ class AnimalModel {
     List<String> videosList = [];
     if (json['videos'] != null) {
       (json['videos'] as List).forEach(
-        (video) => videosList.add(video['embed']),
+        (video) {
+          String v = video['embed'];
+          // padrão da String:
+          //'<iframe src=\"https://www.youtube.com/embed/xaXbs1fRFRM\" frameborder=\"0\" allowfullscreen></iframe>'
+          //para pegar só -> 'https://www.youtube.com/embed/xaXbs1fRFRM' :
+          const start = "src=\"";
+          const end = "\"";
+          final startIndex = v.indexOf(start);
+          final endIndex = v.indexOf(end, startIndex + start.length);
+          v = v.substring(startIndex + start.length, endIndex);
+          videosList.add(v);
+        },
       );
     }
+    videosList.add('https://www.youtube.com/watch?v=h_SO0J68C24');
 
     List<String> breedsList = [];
     String breedsResult = 'Breed not informed';

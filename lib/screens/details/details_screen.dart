@@ -3,7 +3,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 import 'package:pet_friendly/models/animal_model.dart';
 import 'package:pet_friendly/models/contact_model.dart';
-import 'package:pet_friendly/screens/details/widgets/carousel/carousel.dart';
+import 'package:pet_friendly/screens/details/widgets/carousel.dart';
 import 'package:pet_friendly/screens/widgets/custom_app_bar.dart';
 import 'package:pet_friendly/shared/all_colors.dart';
 import 'package:pet_friendly/shared/images_path.dart' as path;
@@ -35,7 +35,7 @@ class DetailsScreen extends StatelessWidget {
             SingleChildScrollView(
               child: Column(
                 children: [
-                  Carousel(images: animal.images),
+                  Carousel(images: animal.images, videos: animal.videos),
                   Padding(
                     padding: const EdgeInsets.only(
                         right: 25, left: 25, top: 5, bottom: 95),

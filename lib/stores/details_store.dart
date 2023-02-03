@@ -1,25 +1,17 @@
-import 'package:flutter/cupertino.dart';
 import 'package:mobx/mobx.dart';
 part 'details_store.g.dart';
 
 class DetailsStore = _DetailsStore with _$DetailsStore;
 
 abstract class _DetailsStore with Store {
-  late PageController carouselController;
-
   @observable
   int currentPage = 0;
 
   @observable
-  int currentImage = 0;
+  int currentCarouselItem = 0;
 
   @action
-  void listenCarousel() {
-    carouselController = PageController();
-    carouselController.addListener(() {
-      currentImage = carouselController.page!.round();
-    });
-  }
+  void setCurrentCarouselItem(int value) => currentCarouselItem = value; 
 
   @action
   void togglePage(int value) {
@@ -29,7 +21,6 @@ abstract class _DetailsStore with Store {
   @action
   void resetDetails() {
     currentPage = 0;
-    currentImage = 0;
-    carouselController.dispose();
+    currentCarouselItem = 0;
   }
 }

@@ -25,19 +25,19 @@ mixin _$DetailsStore on _DetailsStore, Store {
     });
   }
 
-  late final _$currentImageAtom =
-      Atom(name: '_DetailsStore.currentImage', context: context);
+  late final _$currentCarouselItemAtom =
+      Atom(name: '_DetailsStore.currentCarouselItem', context: context);
 
   @override
-  int get currentImage {
-    _$currentImageAtom.reportRead();
-    return super.currentImage;
+  int get currentCarouselItem {
+    _$currentCarouselItemAtom.reportRead();
+    return super.currentCarouselItem;
   }
 
   @override
-  set currentImage(int value) {
-    _$currentImageAtom.reportWrite(value, super.currentImage, () {
-      super.currentImage = value;
+  set currentCarouselItem(int value) {
+    _$currentCarouselItemAtom.reportWrite(value, super.currentCarouselItem, () {
+      super.currentCarouselItem = value;
     });
   }
 
@@ -45,11 +45,11 @@ mixin _$DetailsStore on _DetailsStore, Store {
       ActionController(name: '_DetailsStore', context: context);
 
   @override
-  void listenCarousel() {
+  void setCurrentCarouselItem(int value) {
     final _$actionInfo = _$_DetailsStoreActionController.startAction(
-        name: '_DetailsStore.listenCarousel');
+        name: '_DetailsStore.setCurrentCarouselItem');
     try {
-      return super.listenCarousel();
+      return super.setCurrentCarouselItem(value);
     } finally {
       _$_DetailsStoreActionController.endAction(_$actionInfo);
     }
@@ -81,7 +81,7 @@ mixin _$DetailsStore on _DetailsStore, Store {
   String toString() {
     return '''
 currentPage: ${currentPage},
-currentImage: ${currentImage}
+currentCarouselItem: ${currentCarouselItem}
     ''';
   }
 }
