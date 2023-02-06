@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 import 'package:pet_friendly/screens/details/details_screen.dart';
-import 'package:pet_friendly/screens/home/widgets/age_filter/age_filters.dart';
-import 'package:pet_friendly/screens/home/widgets/card/custom_card.dart';
+import 'package:pet_friendly/screens/home/widgets/age_filters.dart';
+import 'package:pet_friendly/screens/home/widgets/custom_card.dart';
 import 'package:pet_friendly/screens/home/widgets/custom_dropdown_search.dart';
 import 'package:pet_friendly/screens/widgets/custom_app_bar.dart';
 import 'package:pet_friendly/shared/all_colors.dart';
@@ -30,7 +30,7 @@ class HomeScreen extends StatelessWidget {
           children: [
             CustomDropdownSearch(),
             const SizedBox(height: 22),
-            const AgeFilters(),
+            AgeFilters(),
             const SizedBox(height: 20),
             Observer(
               builder: (context) {
