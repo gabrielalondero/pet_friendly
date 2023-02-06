@@ -7,10 +7,15 @@ import 'package:pet_friendly/stores/details_store.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class Carousel extends StatefulWidget {
-  const Carousel({super.key, required this.images, required this.videos});
+  const Carousel(
+      {super.key,
+      required this.images,
+      required this.videos,
+      required this.imageIndex});
 
   final List<String> images;
   final List<String> videos;
+  final int imageIndex;
 
   @override
   State<Carousel> createState() => _CarouselState();
@@ -58,48 +63,51 @@ class _CarouselState extends State<Carousel> {
             decoration: BoxDecoration(
               color: color.pinkLight,
             ),
-            child: PageView.builder(
-              controller: _carouselController,
-              itemCount: listItens.length,
-              itemBuilder: (context, index) {
-                if (listItens[index]['type'] == image) {
-                  return Image.network(
-                    listItens[index]['url'],
-                    fit: BoxFit.contain,
-                    loadingBuilder: (context, child, loadingProgress) {
-                      if (loadingProgress != null) {
-                        return Center(
-                          child: CircularProgressIndicator(
-                            color: color.pink,
+            child: Hero(
+              tag: widget.imageIndex,
+              child: PageView.builder(
+                controller: _carouselController,
+                itemCount: listItens.length,
+                itemBuilder: (context, index) {
+                  if (listItens[index]['type'] == image) {
+                    return Image.network(
+                      listItens[index]['url'],
+                      fit: BoxFit.contain,
+                      loadingBuilder: (context, child, loadingProgress) {
+                        if (loadingProgress != null) {
+                          return Center(
+                            child: CircularProgressIndicator(
+                              color: color.pink,
+                            ),
+                          );
+                        }
+                        return child;
+                      },
+                    );
+                  } else {
+                    _setVideoController(listItens[index]['url']);
+                    return Container(
+                      margin: const EdgeInsets.symmetric(horizontal: 30),
+                      child: YoutubePlayer(
+                        controller: _videoController,
+                        showVideoProgressIndicator: true,
+                        bottomActions: [
+                          const SizedBox(width: 14.0),
+                          CurrentPosition(),
+                          const SizedBox(width: 8.0),
+                          ProgressBar(
+                            isExpanded: true,
+                            colors:
+                                ProgressBarColors(backgroundColor: color.pink),
                           ),
-                        );
-                      }
-                      return child;
-                    },
-                  );
-                } else {
-                  _setVideoController(listItens[index]['url']);
-                  return Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 30),
-                    child: YoutubePlayer(
-                      controller: _videoController,
-                      showVideoProgressIndicator: true,
-                      bottomActions: [
-                        const SizedBox(width: 14.0),
-                        CurrentPosition(),
-                        const SizedBox(width: 8.0),
-                        ProgressBar(
-                          isExpanded: true,
-                          colors:
-                              ProgressBarColors(backgroundColor: color.pink),
-                        ),
-                        RemainingDuration(),
-                        const PlaybackSpeedButton(),
-                      ],
-                    ),
-                  );
-                }
-              },
+                          RemainingDuration(),
+                          const PlaybackSpeedButton(),
+                        ],
+                      ),
+                    );
+                  }
+                },
+              ),
             ),
           ),
         ),

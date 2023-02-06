@@ -44,7 +44,7 @@ class HomeScreen extends StatelessWidget {
                             onTap: () {
                               Navigator.of(context).push(MaterialPageRoute(
                                 builder: (_) => DetailsScreen(
-                                    animal: homeStore.animalsList[index]),
+                                    animal: homeStore.animalsList[index], index: index),
                               ));
                             },
                             child: CustomCard(
