@@ -10,9 +10,10 @@ import 'package:pet_friendly/shared/images_path.dart' as path;
 import 'package:pet_friendly/stores/details_store.dart';
 
 class DetailsScreen extends StatelessWidget {
-  DetailsScreen({super.key, required this.animal});
+  DetailsScreen({super.key, required this.animal, required this.index});
 
   final AnimalModel animal;
+  final int index;
   final DetailsStore detailsStore = GetIt.I<DetailsStore>();
 
   final color = AllColors();
@@ -35,7 +36,7 @@ class DetailsScreen extends StatelessWidget {
             SingleChildScrollView(
               child: Column(
                 children: [
-                  Carousel(images: animal.images, videos: animal.videos),
+                  Carousel(images: animal.images, videos: animal.videos, imageIndex: index,),
                   Padding(
                     padding: const EdgeInsets.only(
                         right: 25, left: 25, top: 5, bottom: 95),

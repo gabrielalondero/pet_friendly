@@ -15,9 +15,9 @@ class CustomCard extends StatelessWidget {
     return box(
       firstWidget: indexIsEven
           ? ContainerInfo(animal: animal, indexIsEven: indexIsEven)
-          : ContainerImage(animal: animal),
+          : ContainerImage(animal: animal, index: index),
       secondWidget: indexIsEven
-          ? ContainerImage(animal: animal)
+          ? ContainerImage(animal: animal, index: index)
           : ContainerInfo(animal: animal, indexIsEven: indexIsEven),
     );
   }
