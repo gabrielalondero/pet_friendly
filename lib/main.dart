@@ -1,26 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get_it/get_it.dart';
-import 'package:pet_friendly/services/pet_finder_service.dart';
+import 'package:pet_friendly/screens/offline_screen.dart';
 import 'package:pet_friendly/screens/home/home_screen.dart';
 import 'package:pet_friendly/shared/all_colors.dart';
+import 'package:pet_friendly/stores/connectivity_store.dart';
 import 'package:pet_friendly/stores/details_store.dart';
 import 'package:pet_friendly/stores/home_store.dart';
 
 void main() async {
   setupLocators();
-  await initData();
+  await GetIt.I<HomeStore>().initData();
   runApp(const MyApp());
 }
 
 void setupLocators() {
+  GetIt.I.registerSingleton(ConnectivityStore());
   GetIt.I.registerSingleton(DetailsStore());
   GetIt.I.registerSingleton(HomeStore());
-}
-
-Future<void> initData() async {
-  await PetFinderService().setToken();
-  await GetIt.I<HomeStore>().getTypes();
 }
 
 class MyApp extends StatelessWidget {
@@ -41,7 +38,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.pink,
       ),
-      home: HomeScreen(),
+      home: GetIt.I<ConnectivityStore>().connected ? const HomeScreen() : const OfflineScreen(),
     );
   }
 }

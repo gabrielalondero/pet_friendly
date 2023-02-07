@@ -9,7 +9,7 @@ part 'home_store.g.dart';
 class HomeStore = _HomeStore with _$HomeStore;
 
 abstract class _HomeStore with Store {
-  late final TypeModel? types;
+  late TypeModel? types;
 
   @observable
   List<AnimalModel> animalsList = [];
@@ -99,8 +99,13 @@ abstract class _HomeStore with Store {
 
   //---------------------------------------------------------------------------------
 
-  Future<void> getTypes() async {
+  Future<void> _getTypes() async {
     types = await PetFinderService().getTypes();
     typesList = types?.mapToFilterList() ?? [];
+  }
+
+  Future<void> initData() async {
+    await PetFinderService().setToken();
+    await _getTypes();
   }
 }
