@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get_it/get_it.dart';
-import 'package:pet_friendly/screens/details/details_screen.dart';
 import 'package:pet_friendly/services/pet_finder_service.dart';
 import 'package:pet_friendly/screens/home/home_screen.dart';
 import 'package:pet_friendly/shared/all_colors.dart';

@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:pet_friendly/models/animal_model.dart';

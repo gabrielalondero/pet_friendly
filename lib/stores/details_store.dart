@@ -1,3 +1,4 @@
+import 'package:pet_friendly/shared/images_path.dart' as path;
 import 'package:mobx/mobx.dart';
 part 'details_store.g.dart';
 
@@ -23,4 +24,33 @@ abstract class _DetailsStore with Store {
     currentPage = 0;
     currentCarouselItem = 0;
   }
+
+  List<Map<String, dynamic>> mapList(
+    List<String> images,
+    List<String> videos,
+  ) {
+    List<Map<String, dynamic>> mapList = [];
+    int index = 0;
+    if (images.isEmpty) {
+      images.add(path.defaultNetworkImage);
+    }
+    images.forEach((i) {
+      mapList.add({
+        'id': index,
+        'type': 'image',
+        'url': i,
+      });
+      index++;
+    });
+    videos.forEach((v) {
+      mapList.add({
+        'id': index,
+        'type': 'video',
+        'url': v,
+      });
+      index++;
+    });
+    return mapList;
+  }
+  
 }
