@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 import 'package:pet_friendly/shared/all_colors.dart';
-import 'package:pet_friendly/shared/images_path.dart' as path;
 import 'package:pet_friendly/stores/details_store.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
@@ -51,7 +50,7 @@ class _CarouselState extends State<Carousel> {
   @override
   Widget build(BuildContext context) {
     List<Map<String, dynamic>> listItens =
-        _mapList(widget.images, widget.videos);
+        detailsStore.mapList(widget.images, widget.videos);
     return Column(
       children: [
         ClipRRect(
@@ -69,43 +68,9 @@ class _CarouselState extends State<Carousel> {
                 controller: _carouselController,
                 itemCount: listItens.length,
                 itemBuilder: (context, index) {
-                  if (listItens[index]['type'] == image) {
-                    return Image.network(
-                      listItens[index]['url'],
-                      fit: BoxFit.contain,
-                      loadingBuilder: (context, child, loadingProgress) {
-                        if (loadingProgress != null) {
-                          return Center(
-                            child: CircularProgressIndicator(
-                              color: color.pink,
-                            ),
-                          );
-                        }
-                        return child;
-                      },
-                    );
-                  } else {
-                    _setVideoController(listItens[index]['url']);
-                    return Container(
-                      margin: const EdgeInsets.symmetric(horizontal: 30),
-                      child: YoutubePlayer(
-                        controller: _videoController,
-                        showVideoProgressIndicator: true,
-                        bottomActions: [
-                          const SizedBox(width: 14.0),
-                          CurrentPosition(),
-                          const SizedBox(width: 8.0),
-                          ProgressBar(
-                            isExpanded: true,
-                            colors:
-                                ProgressBarColors(backgroundColor: color.pink),
-                          ),
-                          RemainingDuration(),
-                          const PlaybackSpeedButton(),
-                        ],
-                      ),
-                    );
-                  }
+                  return listItens[index]['type'] == 'image' 
+                  ? _image(listItens[index])
+                  : _video(listItens[index]);
                 },
               ),
             ),
@@ -121,8 +86,47 @@ class _CarouselState extends State<Carousel> {
     _videoController = YoutubePlayerController(
         initialVideoId: videoId ?? 'h_SO0J68C24',
         flags: const YoutubePlayerFlags(
-          autoPlay: false,
+          autoPlay: true,
         ));
+  }
+
+  Widget _image(Map<String, dynamic> item) {
+    return Image.network(
+      item['url'],
+      fit: BoxFit.contain,
+      loadingBuilder: (context, child, loadingProgress) {
+        if (loadingProgress != null) {
+          return Center(
+            child: CircularProgressIndicator(
+              color: color.pink,
+            ),
+          );
+        }
+        return child;
+      },
+    );
+  }
+
+  Widget _video(Map<String, dynamic> item) {
+    _setVideoController(item['url']);
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 30),
+      child: YoutubePlayer(
+        controller: _videoController,
+        showVideoProgressIndicator: true,
+        bottomActions: [
+          const SizedBox(width: 14.0),
+          CurrentPosition(),
+          const SizedBox(width: 8.0),
+          ProgressBar(
+            isExpanded: true,
+            colors: ProgressBarColors(backgroundColor: color.pink),
+          ),
+          RemainingDuration(),
+          const PlaybackSpeedButton(),
+        ],
+      ),
+    );
   }
 
   Widget _buildBullets(List<Map<String, dynamic>> listItens) {
@@ -149,33 +153,5 @@ class _CarouselState extends State<Carousel> {
         );
       }),
     );
-  }
-
-  List<Map<String, dynamic>> _mapList(
-    List<String> images,
-    List<String> videos,
-  ) {
-    List<Map<String, dynamic>> mapList = [];
-    int index = 0;
-    if (images.isEmpty) {
-      images.add(path.defaultNetworkImage);
-    }
-    images.forEach((i) {
-      mapList.add({
-        'id': index,
-        'type': image,
-        'url': i,
-      });
-      index++;
-    });
-    videos.forEach((v) {
-      mapList.add({
-        'id': index,
-        'type': video,
-        'url': v,
-      });
-      index++;
-    });
-    return mapList;
   }
 }

@@ -25,7 +25,6 @@ class AgeModel {
         age = value;
       }
     });
-    print(age);
     return age;
   }
 
