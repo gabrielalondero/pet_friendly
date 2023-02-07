@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 
 class CustomAppBar extends StatelessWidget {
-  const CustomAppBar({super.key, required this.color});
+  const CustomAppBar({super.key, required this.color,this.leadingVisibility});
 
   final Color color;
-
+  final bool? leadingVisibility;
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
       leading: Visibility(
         //se pode voltar, mostra o botão de voltar
-        visible: Navigator.of(context).canPop(),
+        visible: leadingVisibility == null ? Navigator.of(context).canPop() : leadingVisibility!,
         child: IconButton(
           icon: const Icon(Icons.arrow_back_ios_new),
           onPressed: () {
