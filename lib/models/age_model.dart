@@ -5,7 +5,6 @@ class AgeModel {
   String image;
 
   AgeModel({
-    this.id,
     this.title = 'Unknown age',
     this.image = path.ageYoungImage,
   });
@@ -33,13 +32,13 @@ class AgeModel {
 }
 
 final AgeModel baby =
-    AgeModel(id: 0, image: path.ageBabyImage, title: 'Baby');
+    AgeModel(image: path.ageBabyImage, title: 'Baby');
 
 final AgeModel young = AgeModel(
-    id: 1, image: path.ageYoungImage, title: 'Young');
+    image: path.ageYoungImage, title: 'Young');
 
 final AgeModel adult = AgeModel(
-    id: 2, image: path.ageAdultImage, title: 'Adult');
+    image: path.ageAdultImage, title: 'Adult');
 
 final AgeModel senior = AgeModel(
-    id: 3, image: path.ageSeniorImage, title: 'Senior');
+    image: path.ageSeniorImage, title: 'Senior');
