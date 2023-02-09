@@ -93,9 +93,10 @@ class _HomeScreenState extends State<HomeScreen> {
                               homeStore.loadingNextPage();
                             }
                             if (homeStore.loading) {
-                              return const SizedBox(
-                                height: 10,
-                                child: LinearProgressIndicator(),
+                              return Container(
+                                margin: const EdgeInsets.symmetric(horizontal: 25),
+                                height: 5,
+                                child: const LinearProgressIndicator(),
                               );
                             }
                             return Padding(
